@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Unic.Bob.Lofty</id>
+	<title>Lofty - Deployment Tools</title>
+    <version>0.0.0.0</version>
+    <authors>Unic AG</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bob's build server tools</description>
+  </metadata>
+  <files>
+    <file src="..\scripts\BobCanDo-InstallPackage.ps1" target="tools\scripts" />
+    <file src="..\scripts\modules\lofty\*" target="tools\scripts\modules\build" />
+	<file src="..\tools\curl\*" target="tools\tools\curl" />
+  </files>
+</package>
