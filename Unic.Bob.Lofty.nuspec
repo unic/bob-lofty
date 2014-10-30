@@ -10,6 +10,6 @@
   </metadata>
   <files>
     <file src="src\**" />
-	  <file src="packages\**" target="packages" />
+    <file src="packages\**" target="tools" />
   </files>
 </package>

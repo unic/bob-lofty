@@ -1,6 +1,6 @@
 function ResolvePath() {
   param($PackageId, $RelativePath)
-  $paths = @("$PSScriptRoot\..\..\packages", "$PSScriptRoot\..\packages")
+  $paths = @("$PSScriptRoot\..\..\packages", "$PSScriptRoot\..\tools")
   foreach($packPath in $paths) {
     $path = Join-Path $packPath "$PackageId\$RelativePath"
     if((Test-Path $packPath) -and (Test-Path $path)) {
