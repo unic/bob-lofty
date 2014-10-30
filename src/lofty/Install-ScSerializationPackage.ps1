@@ -61,7 +61,7 @@ Function Install-ScSerializationPackage
         $params = @();
         $params += "$url/services/package/install/fileupload"
         $params += "-F"
-        $params += "file=@$Path"
+        $params += "file=""@$Path"""
         $params += "-F"
         $params += "DisableIndexing=$DisableIndexing"
 
