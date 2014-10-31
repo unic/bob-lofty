@@ -57,6 +57,10 @@ Function Install-ScSerializationPackage
         $scriptPath = Split-Path $scriptInvocation.MyCommand.Definition -Parent
 
         $Path = (Resolve-Path $Path).Path
+        $statusFile = "$($env:TEMP)\$([GUID]::NewGuid())"
+        $returnFile = "$($env:TEMP)\$([GUID]::NewGuid())"
+        "" | Out-File $returnFile -Encoding UTF8
+        $errorFile = "$($env:TEMP)\$([GUID]::NewGuid())"
 
         $params = @();
         $params += "$url/services/package/install/fileupload"
@@ -64,6 +68,11 @@ Function Install-ScSerializationPackage
         $params += "file=""@$Path"""
         $params += "-F"
         $params += "DisableIndexing=$DisableIndexing"
+        $params += "-k"
+        $params += "-o"
+        $params += "$returnFile"
+        $params += "-w"
+        $params +=  """%{http_code}"""
 
         if($PackageId) {
             $params += "-F";
@@ -74,17 +83,22 @@ Function Install-ScSerializationPackage
             $params += "Description=$Description"
         }
 
-        $process = Start-Process (ResolvePath "curl" "tools\curl.exe") $params -RedirectStandardOutput "$($env:TEMP)\install-serializationPackage-std.txt" -RedirectStandardError "$($env:TEMP)\install-serializationPackage-error.txt" -NoNewWindow  -Wait -PassThru
+        $process = Start-Process (ResolvePath "curl" "tools\curl.exe") $params -RedirectStandardOutput $statusFile -RedirectStandardError $errorFile -NoNewWindow  -Wait -PassThru
 
         $logPath = "$((Resolve-Path $Path).Path).log"
-        cp "$($env:TEMP)\install-serializationPackage-std.txt" $logPath
-        if($process.ExitCode -eq 0) {
-            Write-Host "Installed SerializationPackage $Path with API-Url '$("$url/services/package/install/fileupload")'  "
-            Write-Host "The log was written at $logPath"
+        $errorLogPath = "$((Resolve-Path $Path).Path).error.log"
+        cp $returnFile $logPath
+        cp $errorFile $errorLogPath
+
+        $status = (Get-Content $statusFile)
+        if($process.ExitCode -eq 0 -and $status -ge 200 -and $status -lt 400) {
+            Write-Host "Installed SerializationPackage:  $Path with API-Url '$("$url/services/package/install/fileupload") "
+            Write-Host (Get-Content $returnFile )
 
         }
         else {
-            Write-Error ("Install SerializationPackage $Path with API-Url '$("$url/services/package/install/fileupload") failed`n" + (Get-Content "$($env:TEMP)\install-serializationPackage-error.txt"))
+            Write-Error ("Install SerializationPackage $Path with API-Url '$("$url/services/package/install/fileupload") failed`n" + (Get-Content $errorFile) + "`n" + (Get-Content $returnFile))
+
             return
         }
         if($Publish) {
