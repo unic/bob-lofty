@@ -1,4 +1,4 @@
-function Restore-UnamangedFiles
+function Restore-UnmanagedFiles
 {
     [CmdletBinding()]
     Param(
