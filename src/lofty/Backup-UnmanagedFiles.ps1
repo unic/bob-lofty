@@ -14,8 +14,13 @@ function Backup-UnmanagedFiles
     mkdir $tempBackup | Out-Null
 
     $config = Get-ScProjectConfig $ConfigPath
+    if($config.UnmanagedFiles) {
+        Copy-RubbleItem -Path $webPath -Destination $tempBackup -Pattern (Get-RubblePattern $config.UnmanagedFiles) -Verbose
 
-    Copy-RubbleItem -Path $webPath -Destination $tempBackup -Pattern (Get-RubblePattern $config.UnmanagedFiles) -Verbose
+    }
+    else {
+        Write-Warning "No UnmanagedFiles are configured."
+    }
 
     $tempBackup
   }
