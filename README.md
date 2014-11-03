@@ -5,7 +5,7 @@ Lofty is the toolset for performing deployments. Basically it is a PowerShell mo
 ### Release Build
 
 
-## Documentation 
+
+## Documentation
 
 <https://me.unic.com/display/BULLWCMS/Lofty>
-
