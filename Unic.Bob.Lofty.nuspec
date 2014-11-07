@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Unic.Bob.Lofty</id>
+	<title>Lofty - Deployment Tools</title>
+    <version>$VERSION$</version>
+    <authors>Unic AG</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bob's deployment tools</description>
+  </metadata>
+  <files>
+    <file src="src\**" />
+    <file src="packages\**" target="tools" />
+  </files>
+</package>
