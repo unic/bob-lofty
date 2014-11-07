@@ -15,6 +15,6 @@ function Remove-EnvironmentFiles
     $config  = Get-ScProjectConfig $WebRoot
     $pattern = Get-RubblePattern -Pattern $config.KeepAppConfigIncludes -Replacement @{'$Envrionemnt'= $Environment; '$Role' = $Role }
 
-    Remove-RubbleItem -Folder $WebRoot -Pattern $pattern
+    Remove-RubbleItem -Folder "$WebRoot\App_Config\Include" -Pattern $pattern
   }
 }
