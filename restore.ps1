@@ -1,7 +1,8 @@
-$nuget = "$PSScriptRoot\nuget.exe"
+$Invocation = (Get-Variable MyInvocation -Scope 1).Value
+$PSScriptRoot = Split-Path $Invocation.MyCommand.Path
 
-if(-not (Test-Path $nuget)) {
-  Invoke-WebRequest "https://nuget.org/nuget.exe" -OutFile $nuget
-}
+$paketFolder = "$PSScriptRoot\.paket"
+$paketBoot = "$paketFolder\paket.bootstrapper.exe"
 
-& $nuget install packages.config -o packages -ExcludeVersion
+& $paketBoot
+& "$paketFolder\paket.exe" restore

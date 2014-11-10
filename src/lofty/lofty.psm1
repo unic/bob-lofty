@@ -14,8 +14,8 @@ function ResolvePath() {
   Write-Error "No path found for $RelativePath in package $PackageId"
 }
 
-Import-Module (ResolvePath "Unic.Bob.Config" "tools\BobConfig")
-Import-Module (ResolvePath "Unic.Bob.Rubble" "tools\Rubble")
+Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\BobConfig")
+Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
 
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.tests.ps1| Foreach-Object{ . $_.FullName }
 Export-ModuleMember -Function * -Alias *
