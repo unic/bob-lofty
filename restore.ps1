@@ -1,4 +1,4 @@
-$Invocation = (Get-Variable MyInvocation -Scope 1).Value
+$Invocation = (Get-Variable MyInvocation -Scope 0).Value
 $PSScriptRoot = Split-Path $Invocation.MyCommand.Path
 
 $paketFolder = "$PSScriptRoot\.paket"
