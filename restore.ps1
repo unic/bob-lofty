@@ -6,3 +6,9 @@ $paketBoot = "$paketFolder\paket.bootstrapper.exe"
 
 & $paketBoot
 & "$paketFolder\paket.exe" restore
+
+if($LASTEXITCODE -ne 0) {
+    if($env:TEAMCITY_VERSION) {
+        exit 1
+    }
+}
