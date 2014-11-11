@@ -4,7 +4,7 @@ Lofty is the toolset for performing deployments. Basically it is a PowerShell mo
 
 ### Build
 
-
+[![Build](https://teamcity.unic.com/httpAuth/app/rest/builds/buildType:Sitecore_Frameworks_Bob_Lofty_Build/statusIcon)](https://teamcity.unic.com/viewType.html?buildTypeId=Sitecore_Frameworks_Bob_Lofty_Build)
 
 ## Documentation
 
