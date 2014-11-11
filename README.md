@@ -2,7 +2,7 @@
 
 Lofty is the toolset for performing deployments. Basically it is a PowerShell module which is used during deployment (i.e. installation) on the web server.
 
-### Release Build
+### Build
 
 
 
