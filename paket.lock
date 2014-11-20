@@ -6,3 +6,4 @@ NUGET
   remote: https://chocolatey.org/api/v2
   specs:
     curl (7.28.1)
+    pester (3.1.1)
