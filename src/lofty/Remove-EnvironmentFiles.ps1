@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Removes all App_Config\Include folders which doesn't match the current environment and role.
+Removes all App_Config\Include folders which don't match the current environment and role.
 
 .DESCRIPTION
-Removes all App_Config\Include folders which doesn't match the current environment and role.
+Removes all App_Config\Include folders which don't match the current environment and role.
 The exact pattern of folders, which should not be deleted can be configured in **KeepAppConfigIncludes**
 
 .PARAMETER WebRoot

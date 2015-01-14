@@ -4,7 +4,7 @@ Backup all unmanaged files inside a folder to a temp location.
 
 .DESCRIPTION
 Backup all unmanaged files inside a folder to a temp location.
-The pattern of the unmanaged files will taken from the Bob.config files.
+The pattern of the unmanaged files is taken from the Bob.config files.
 
 .PARAMETER WebPath
 The path containing the unmanaged files.

@@ -11,7 +11,6 @@ The folder to backup.
 
 .PARAMETER BackupLocation
 The folder where the backup ZIP file should be placed.
-If none "D:\backup" will be used.
 
 .PARAMETER BackupFileName
 The name of the ZIP file.
@@ -26,16 +25,13 @@ function Backup-WebRoot
     Param(
       [Parameter(Mandatory=$true)]
       [string] $Path,
-      [string] $BackupLocation,
+      [string] $BackupLocation = "D:\backup",
       [string] $BackupFileName
     )
     Process
     {
-        if(-not $BackupLocation) {
-            $BackupLocation = "D:\backup"
-            if(-not (Test-Path $BackupLocation)) {
-                mkdir $BackupLocation | Out-Null
-            }
+        if(-not (Test-Path $BackupLocation)) {
+            mkdir $BackupLocation | Out-Null
         }
         if(-not $BackupFileName) {
             $name = (Get-Item $Path).Name
