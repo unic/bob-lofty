@@ -1,3 +1,25 @@
+<#
+.SYNOPSIS
+Removes all App_Config\Include folders which don't match the current environment and role.
+
+.DESCRIPTION
+Removes all App_Config\Include folders which don't match the current environment and role.
+The exact pattern of folders, which should not be deleted can be configured in **KeepAppConfigIncludes**
+
+.PARAMETER WebRoot
+The path to the WebRoot.
+
+.PARAMETER Environment
+The current envrionment.
+
+.PARAMETER Role
+The current role.
+
+
+.EXAMPLE
+Remove-EnvironmentFiles -WebRoot D:\webs\my -Environment dev -Role author
+
+#>
 function Remove-EnvironmentFiles
 {
   [CmdletBinding()]
