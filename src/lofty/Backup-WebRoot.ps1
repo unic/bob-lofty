@@ -1,3 +1,25 @@
+<#
+.SYNOPSIS
+Backup the whole WebRoot.
+
+.DESCRIPTION
+Backup the whole WebRoot to a ZIP file in D:\backup or a specified location.
+
+
+.PARAMETER Path
+The folder to backup.
+
+.PARAMETER BackupLocation
+The folder where the backup ZIP file should be placed.
+If none "D:\backup" will be used.
+
+.PARAMETER BackupFileName
+The name of the ZIP file.
+If a combination of folder-name, computer name and date will be used.
+
+.EXAMPLE
+
+#>
 function Backup-WebRoot
 {
     [CmdletBinding()]
