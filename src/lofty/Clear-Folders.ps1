@@ -34,7 +34,7 @@ function Clear-Folders
             if($folder) {
                 if(Test-Path $folder) {
                     $folder = Resolve-Path $folder
-                    Write-Verbose "Delete $folder"
+                    Write-Verbose "Delete content of $folder"
                     rm "$folder\*" -Recurse
                 }
             }
