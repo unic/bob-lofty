@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<counters xmlns="urn:sitecore:core:performancecounters" >
+  <category name="Sitecore.Analytics.MongoDb" description="Sitecore Analytics MongoDB related counters">
+
+    <!-- MongoDB counters:-->
+
+    <counter name="Reads / sec" type="Default" description="The number of read operations from MongoDB."/>
+    <counter name="Writes / sec" type="Default" description="The number of write operations from MongoDB."/>
+    <counter name="Documents fetched / sec" type="Default" description="The number of documents fetched from MongoDB."/>
+
+    <!-- Aggregation Counters: -->
+    <counter name="Data | Aggregation - Add (Visits scheduled for aggregation) / sec" shortname="DataAggregationProcessingPoolAdd" type="Default" description="The number of visits scheduled for aggregation per second."/>
+    <counter name="Data | Aggregation - Check out calls / sec" shortname="DataAggregationProcessingPoolCheckOutCalls" type="Default" description="The number of scheduled checked out calls for aggregation processing per second."/>
+    <counter name="Data | Aggregation - Check out (Visits checked out) / sec" shortname="DataAggregationProcessingPoolCheckOut" type="Default" description="The number of scheduled visits checked out for aggregation processing per second."/>
+    <counter name="Data | Aggregation - Check in (Visits checked in) / sec" shortname="DataAggregationProcessingPoolCheckIn" type="Default" description="The number of scheduled visits checked in after the aggregator has processed it per second."/>
+    <counter name="Data | Aggregation - Pool cleanup calls / sec" shortname="DataAggregationPoolCleanupCalls" type="Default" description="The number of aggregation pool cleanup calls per second."/>
+    <counter name="Data | Aggregation - Visits cleaned up / sec" shortname="DataAggregationVisitsCleanedUp" type="Default" description="The number of visits cleaned up from the aggregation precessiong pool per second."/>
+    <counter name="Data | Aggregation - Pool Recovery calls / sec" shortname="DataAggregationPoolRecoveryCalls" type="Default" description="The number of aggregation pool recovery calls per second."/>
+    <counter name="Data | Aggregation - Visits recovered / sec" shortname="DataAggregationVisitsRecovered" type="Default" description="The number of visits recovered from the aggregation pool per second."/>
+
+  </category>
+</counters>

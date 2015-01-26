@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<counters xmlns="urn:sitecore:core:performancecounters">
+  <category name="Sitecore.Automation" description="Sitecore Engagement Automation Suite counters">
+    <counter name="State Transitions / sec" type="AmountPerSecond" description="The number of transitions of automation state records between automation states per second. Every transition designates a successful evaluation of the conditions assigned to the automation state."/>
+    <counter name="State Evaluations - Total / sec" type="AmountPerSecond" description="The total number of automation condition that are evaluated per second."/>
+    <counter name="State Evaluations - Page Events / sec" type="AmountPerSecond" description="The number of automation condition evaluations per second that are triggered by page events."/>
+    <counter name="State Evaluations - Timeouts / sec" type="AmountPerSecond" description="The number of automation condition evaluations per second that are triggered by a timeout."/>
+    <counter name="Emails Sent / sec" type="AmountPerSecond" description="The number of emails per second that are sent as a result of evaluating an engagement plan."/>
+    <counter name="Average Evaluation Time" type="Average" description="The average time in milliseconds that it takes to evaluate conditions and execute actions for a single automation state."/>
+    <counter name="Average State Load Time - Contact" type="Average" description="The average time in milliseconds that it takes to load a Contact's automation states from the database."/>
+    <counter name="Monitor - Average Time to Load Data - ms" shortname="CountContactsInPlan" type="Average" description="The average time in milliseconds that it takes to count the number of contacts in a plan."/>
+
+    <counter name="Aggregation | Automation Transitions Aggregated / sec" type="AmountPerSecond" description="The number or automation state transitions aggregated." />
+    <counter name="Aggregation | Contact States Aggregated / sec" type="AmountPerSecond" description="The number of contacts processed while rebuilding the reporting database." />
+    <counter name="Aggregation | Transition Aggregation Errors / sec" type="AmountPerSecond" description="The number of errors (exceptions) occured during aggregation of state transitions." />
+    <counter name="Aggregation | Contact State Aggregation Errors / sec" type="AmountPerSecond" description="The number of errors (exceptions) occured during aggregation of contact states while rebuilding the reporting database" />
+    <counter name="Aggregation | Average Automation Aggregation Pipeline Time / sec" type="Average" description="The average time in milliseconds that it takes to run the automation aggregation pipeline" />
+    <counter name="Aggregation | Average Transition Store In Reporting / sec" type="Average" description="The average time in milliseconds that it takes to store live transitions in the reporting storages" />
+    <counter name="Aggregation | Average Contact States Store In Reporting / sec" type="Average" description="The average time in milliseconds that it takes to store history contact states in the reporting storages" />
+    <counter name="Data | Average Delete Aggregated Transitions Time / sec" type="Average" description="A cleanup agent periodically removes transitions that have been previously aggregated" />
+    <counter name="Data | Average Merge Transition Time/ sec" type="Average" description="The average time in milliseconds that it takes to merge a transition" />
+
+  </category>
+</counters>
