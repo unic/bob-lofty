@@ -19,3 +19,5 @@ Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rub
 
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.tests.ps1| Foreach-Object{ . $_.FullName }
 Export-ModuleMember -Function * -Alias *
+
+$VerbosePreference = "Continue"
