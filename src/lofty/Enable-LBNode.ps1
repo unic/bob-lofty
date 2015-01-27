@@ -26,5 +26,9 @@ function Enable-LBNode
     )
     Process
     {
+        $node = Get-LBNode $PoolName $MemberName $BigIPHostname $Username $Password
+        $ctrl = Get-F5.iControl
+        $ctrl.LocalLBPool.set_member_session_enabled_state($node.Pool, $node.AddressPort, "STATE_ENABLED")
+
     }
 }

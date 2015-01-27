@@ -32,14 +32,19 @@ function Disable-LBNode
     {
         $node = Get-LBNode $PoolName $MemberName $BigIPHostname $Username $Password
         $startConnections = Get-LBNodeConnections $node.Pool $node.IPPortDefinition
-        $connectionPerCent = 100
-        while($connectionPerCent -gt $WaitPerCent) {
+        $ctrl = Get-F5.iControl
+        $ctrl.LocalLBPool.set_member_session_enabled_state($node.Pool, $node.AddressPort, "STATE_DISABLED")
+
+        if($startConnections -ne 0) {
             $connections = Get-LBNodeConnections $node.Pool $node.IPPortDefinition
             $connectionPerCent = $connections / $startConnections
-            Write-Host ($WaitPerCent)
-            sleep -s 1
+            $startTime = Get-Date
+            while($connectionPerCent -gt $WaitPerCent -and ((Get-Date) - $startTime).Seconds -lt $TimeoutSeconds) {
+                sleep -s 1
+                $connections = Get-LBNodeConnections $node.Pool $node.IPPortDefinition
+                $connectionPerCent = $connections / $startConnections
+            }
         }
-        $startConnections
-        #$ctrl.LocalLBPool.set_member_session_enabled_state($pool, $member, "STATE_DISABLED")
+
     }
 }
