@@ -14,8 +14,24 @@ function ResolvePath() {
   Write-Error "No path found for $RelativePath in package $PackageId"
 }
 
+function ResolveBinPath() {
+    param($Path)
+
+    $paths = @("$PSScriptRoot\..\..\tools", "$PSScriptRoot\..\tools")
+    foreach($toolPath in $paths ) {
+        $binPath = Join-Path $toolPath $Path
+        if(Test-Path $binPath) {
+            Resolve-Path $binPath
+            return
+        }
+    }
+
+    Write-Error "No bin path found for $Path"
+}
+
 Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\BobConfig")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
+Import-Module (ResolveBinPath "iControl\iControlSnapIn.dll")
 
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.tests.ps1| Foreach-Object{ . $_.FullName }
 Export-ModuleMember -Function * -Alias *
