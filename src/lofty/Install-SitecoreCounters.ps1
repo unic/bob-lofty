@@ -1,12 +1,14 @@
 <#
 .SYNOPSIS
-Installs the specified Sitecore performance counters adds the IIS user to the
+Installs the specified Sitecore performance counters, and adds the IIS user to the
 correct group.
 
 .DESCRIPTION
 Installs the Sitecore performance counters specified in the passed XML files.
 Addionally the user of the specified IIS AppPool will be added to the
 Performance Monitor Users group.
+The SitecoreCounter console application from https://kb.sitecore.net/articles/404548
+will be used to install the counters.
 
 .PARAMETER Files
 A semicolon separated list of XML file-names, containing the counters to install.
@@ -17,15 +19,15 @@ Possible files are:
 - Sitecore.Kernel.Counters.xml
 
 .PARAMETER AppPoolName
-The name of the Sitecore application pool wo grant access to the Performance
-Monitor counters.
+The name of the Sitecore application pool. The application pool user will be
+added to the _Performance Monitor Users_ group.
 
 .PARAMETER PerformanceGroup
 The name of the Performance Monitor Users group.
 
 .EXAMPLE
 Install-SitecoreCounters -Files "Sitecore.Analytics.Counters.xml;Sitecore.Automation.Counters.xml" `
-                         -AppPoolName "sitecore-live" 
+                         -AppPoolName "sitecore-live"
 
 #>
 function Install-SitecoreCounters
