@@ -1,10 +1,15 @@
 <#
 .SYNOPSIS
+Enables a node on the load balancer.
 
 .DESCRIPTION
+Enables a previously disabled node on the load balancer.
 
+.PARAMETER PoolName
+The name of the pool containing the node to enable.
 
-.PARAMETER
+.PARAMETER MemberName
+The name of the member to enable on the load balancer.
 
 .EXAMPLE
 

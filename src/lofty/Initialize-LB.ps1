@@ -1,10 +1,19 @@
 <#
 .SYNOPSIS
+Logs in globally to the load balancer.
 
 .DESCRIPTION
+Logs in globally to the load balancer.
 
+.PARAMETER HostName
+The host name of the load balancer.
 
-.PARAMETER
+.PARAMETER Username
+The username to log in at the load balancer.
+
+.PARAMETER Password
+The password to log in at the load balancer.
+
 
 .EXAMPLE
 

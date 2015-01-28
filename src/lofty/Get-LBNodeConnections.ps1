@@ -1,12 +1,20 @@
 <#
 .SYNOPSIS
+Returns the number of current connections on a specific pool member.
 
 .DESCRIPTION
+Returns the number of current connections on a specific pool member.
 
+.PARAMETER Pool
+The full name of the pool containing the member.
 
-.PARAMETER
+.PARAMETER IPPortDefinition
+The iControl.CommonIPPortDefinition representing the node.
 
 .EXAMPLE
+$node = Get-LBNode mynode mypool
+Get-LBNodeConnections $node.Pool $node.IPPortDefinition
+
 
 #>
 function Get-LBNodeConnections

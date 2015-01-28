@@ -1,12 +1,24 @@
 <#
 .SYNOPSIS
+Returns informations about a specific node in the load balancer.
 
 .DESCRIPTION
+Returns informations about a specific node (pool member) in the load balancer.
+The return value will be an object with the following properties:
+* Pool: The full name of to pool, including the partition
+* AddressPort: The iControl.CommonAddressPortDefinition object representing the node.
+               This must be used in the newer iControl functions.
+* IPPortDefinition: The iControl.CommonIPPortDefinition object representing the node.
+                    This must be used in the older iControl functions.
 
+.PARAMETER PoolName
+The name of the pool containing the node to get.
 
-.PARAMETER
+.PARAMETER MemberName
+The name of the member to get from the load balancer.
 
 .EXAMPLE
+Get-LBNode mypool mynode
 
 #>
 function Get-LBNode

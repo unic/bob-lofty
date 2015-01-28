@@ -4,13 +4,26 @@ Disables a node in the load balancer and waits until connections drops to specif
 
 .DESCRIPTION
 Disables a node in the load balancer and waits until connections on the node
-falls to specific percent of the original connections. So if before disabling
+drops to specific percent of the original connections. So if before disabling
 the node there are 100 connections and $WaitPerCent is 0.15, Disable-LBNode
-will wait until there are only 15 connections left.
+will wait until there are less than 15 connections left.
 
 .PARAMETER PoolName
+The name of the pool containing the node to disable.
+
+.PARAMETER MemberName
+The name of the member to disable on the load balancer.
+
+.PARAMETER WaitPerCent
+After disabling the node, Disable-LBNode will wait until the connections drops
+to $WaitPerCent of the original connections.
+The percent must be specified in decimal form. So 15% is 0.15.
+
+.PARAMETER TimeoutSeconds
+The maximum number of seconds to wait.
 
 .EXAMPLE
+Disable-LBNode -PoolName mypool -MemberName mynode -WaitPerCent 0.15 -TimeoutSeconds 600 
 
 #>
 function Disable-LBNode
