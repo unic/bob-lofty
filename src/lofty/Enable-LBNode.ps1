@@ -16,17 +16,11 @@ function Enable-LBNode
         [Parameter(Mandatory=$true)]
         [string] $PoolName,
         [Parameter(Mandatory=$true)]
-        [string] $MemberName,
-        [Parameter(Mandatory=$true)]
-        [string] $BigIPHostname,
-        [Parameter(Mandatory=$true)]
-        [string] $Username,
-        [Parameter(Mandatory=$true)]
-        [string] $Password
+        [string] $MemberName
     )
     Process
     {
-        $node = Get-LBNode $PoolName $MemberName $BigIPHostname $Username $Password
+        $node = Get-LBNode $PoolName $MemberName
         $ctrl = Get-F5.iControl
         $ctrl.LocalLBPool.set_member_session_enabled_state($node.Pool, $node.AddressPort, "STATE_ENABLED")
 

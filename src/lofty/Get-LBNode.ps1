@@ -16,18 +16,10 @@ function Get-LBNode
         [Parameter(Mandatory=$true)]
         [string] $PoolName,
         [Parameter(Mandatory=$true)]
-        [string] $MemberName,
-        [Parameter(Mandatory=$true)]
-        [string] $BigIPHostname,
-        [Parameter(Mandatory=$true)]
-        [string] $Username,
-        [Parameter(Mandatory=$true)]
-        [string] $Password
+        [string] $MemberName
     )
     Process
     {
-        Initialize-F5.iControl -HostName $BigIPHostname -Username $Username -Password $Password
-
         $ctrl = (Get-F5.iControl)
         $pools = $ctrl.LocalLBPool.get_list() | ? {$_ -like "/*/$PoolName"}
 

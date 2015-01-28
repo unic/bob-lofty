@@ -2,8 +2,6 @@ $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path).Replace(".Tests.", ".")
 . "$here\$sut"
 
-
-
 function Get-LBNode { }
 function Get-F5.iControl {
     $ctrl = @{"LocalLBPool" = @{}}
@@ -27,7 +25,7 @@ Describe "Disable-LBNode" {
 
         Mock Start-Sleep {} -Verifiable
 
-        Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
+        Disable-LBNode dummy dummy 0.15 5
 
         It "Should have finished immediately" {
         }
@@ -43,7 +41,7 @@ Describe "Disable-LBNode" {
 
         Mock Sleep {} -Verifiable
 
-        Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
+        Disable-LBNode dummy dummy 0.15 5
 
         It "Should take 2 seconds to fall under 15%" {
             Assert-MockCalled Start-Sleep -Times 2
@@ -57,12 +55,12 @@ Describe "Disable-LBNode" {
         }
 
         $global:sleepTime = 0
-        Mock Sleep {$global:sleepTime += $Seconds * 1000 + $Milliseconds} -Verifiable
+        Mock Start-Sleep {$global:sleepTime += $Seconds * 1000 + $Milliseconds} -Verifiable
         Mock Get-Date {
             (New-Object DateTime).AddMilliseconds($global:sleepTime);
         }
 
-        Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
+        Disable-LBNode dummy dummy 0.15 5
 
         It "Should have finished after 5 seconds" {
             Assert-MockCalled Start-Sleep -Times 5
@@ -78,7 +76,7 @@ Describe "Disable-LBNode" {
 
         Mock Start-Sleep {} -Verifiable
 
-        Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
+        Disable-LBNode dummy dummy 0.15 5
 
         It "Should have finished immidiately" {
             Assert-MockCalled Start-Sleep -Times 0

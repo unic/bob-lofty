@@ -31,8 +31,9 @@ function ResolveBinPath() {
 
 Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\BobConfig")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
+$WarningPreference = "SilentlyContinue"
 Import-Module (ResolveBinPath "iControl\iControlSnapIn.dll")
-
+$WarningPreference = "Continue"
 Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.tests.ps1| Foreach-Object{ . $_.FullName }
 Export-ModuleMember -Function * -Alias *
 
