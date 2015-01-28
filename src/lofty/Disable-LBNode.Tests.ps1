@@ -25,11 +25,11 @@ Describe "Disable-LBNode" {
             }
         }
 
-        $startTime = Get-Date
+        Mock Start-Sleep {} -Verifiable
+
         Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
-        $endTime = Get-Date
+
         It "Should have finished immediately" {
-          ($endTime - $startTime).Seconds | Should Be 0
         }
     }
 
@@ -41,11 +41,12 @@ Describe "Disable-LBNode" {
             $global:connections
         }
 
-        $startTime = Get-Date
+        Mock Sleep {} -Verifiable
+
         Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
-        $endTime = Get-Date
+
         It "Should take 2 seconds to fall under 15%" {
-          ($endTime - $startTime).Seconds | Should Be 2
+            Assert-MockCalled Start-Sleep -Times 2
         }
     }
 
@@ -55,11 +56,16 @@ Describe "Disable-LBNode" {
             100
         }
 
-        $startTime = Get-Date
-        Disable-LBNode dummy dummy dummy dummy dummy 0.15 1
-        $endTime = Get-Date
-        It "Should have finished after 1 seconds" {
-          ($endTime - $startTime).Seconds | Should Be 1
+        $global:sleepTime = 0
+        Mock Sleep {$global:sleepTime += $Seconds * 1000 + $Milliseconds} -Verifiable
+        Mock Get-Date {
+            (New-Object DateTime).AddMilliseconds($global:sleepTime);
+        }
+
+        Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
+
+        It "Should have finished after 5 seconds" {
+            Assert-MockCalled Start-Sleep -Times 5
         }
     }
 
@@ -70,11 +76,12 @@ Describe "Disable-LBNode" {
             0
         }
 
-        $startTime = Get-Date
+        Mock Start-Sleep {} -Verifiable
+
         Disable-LBNode dummy dummy dummy dummy dummy 0.15 5
-        $endTime = Get-Date
+
         It "Should have finished immidiately" {
-          ($endTime - $startTime).Seconds | Should Be 0
+            Assert-MockCalled Start-Sleep -Times 0
         }
     }
 }
