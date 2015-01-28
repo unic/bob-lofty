@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<counters xmlns="urn:sitecore:core:performancecounters" >
+  <category name="Sitecore.Analytics" description="Sitecore Analytics related counters">
+    <counter name="Collection | Total Requests / sec" type="Default" description="The total number of page requests per second that are handled by the system. This includes both tracked and ignored requests."/>
+    <counter name="Collection | Requests Tracked / sec" type="Default" description="The number of page requests per second that are tracked by the system. This is part of Collection | Total Requests."/>
+    <counter name="Collection | Requests Ignored / sec" type="Default" description="The number of page requests per second that are ignored by the system. This is part of Collection | Total Requests."/>
+    <counter name="Collection | Malicious Robot Requests / sec" type="Default" description="The number of requests per second that are made by a known malicious robot."/>
+    <counter name="Collection | Robot Requests / sec" type="Default" description="The number of requests per second that are made by a robot."/>
+    <counter name="Collection | Human Requests / sec" type="Default" description="The number of requests per second that are made by a human."/>
+    <counter name="Collection | Total Visits / sec" type="Default" description="The total number of visits per second that are registered by the system."/>
+    <counter name="Collection | Unique Visitors / sec" type="Default" description="The number of unique visitors per second."/>
+    <counter name="Data | Rows Saved - Total / sec" type="Default" description="The total number of rows saved per second. This includes rows saved by bulk copy, batch update, and row-by-row operations."/>
+    <counter name="Data | Rows Saved - Bulk Copy / sec" type="Default" description="The number of rows per second that are updated by bulk operations."/>
+    <counter name="Data | Rows Saved - Batch / sec" type="Default" description="The number rows per second that are updated by batch insert operations."/>
+    <counter name="Data | Rows Saved - Row By Row / sec" type="Default" description="The number rows per second that are updated by row-by-row operations."/>
+    <counter name="Data | Rows Failed to Save / sec" type="Default" description="The number of rows that failed to save to the database per second."/>
+    <counter name="Data | Commit Queue Length" type="Absolute" description="The number of rows in the commit queue."/>
+    <counter name="Data | Commit Queue Flush Length" type="Absolute" description="The number of rows in the commit queue just before it is flushed."/>
+    <counter name="Data | Tracker Flushes - Total / sec" type="Default" description="The total number of background writes to the database (TrackerChanges.Flush()) per second. This includes writes that are triggered explicitly, by a timeout or by commit queue overflow."/>
+    <counter name="Data | Tracker Flushes - Explicit / sec" type="Default" description="The number of background writes per second that are triggered explicitly by an API call."/>
+    <counter name="Data | Tracker Flushes - Inline / sec" type="Default" description="The number of background writes per second that are implicitly triggered at the end of a web request."/>
+    <counter name="Data | Tracker Flushes - Timeout / sec" type="Default" description="The number of background writes per second that are triggered by a timeout."/>
+    <counter name="Data | Tracker Flushes - Capacity Overflow" type="Default" description="The number of background writes per second that are triggered by the commit queue reaching the configured size."/>
+    <counter name="Data | Average Tracker Flush Time" type="Average" description="The average time in milliseconds that it takes to execute a request to write data to the database."/>
+    <counter name="Data | Last Tracker Flush Time" type="Absolute" description="The time in milliseconds that it took to execute the last request to write data to the database."/>
+
+    <!-- Location dictionary counters:-->
+    <counter name="Data | Dictionaries - Locations Reads / sec" type="Default" description="The number of Location dictionary read operations."/>
+    <counter name="Data | Dictionaries - Locations Cache Hits / sec" type="Default" description="The number of Location dictionary cache hits."/>
+    <counter name="Data | Dictionaries - Locations Database Reads / sec" type="Default" description="The number of Location dictionary database read operations."/>
+    <counter name="Data | Dictionaries - Locations Writes / sec" type="Default" description="The number of Location dictionary write operations."/>
+
+    <!-- ReferringSites dictionary counters:-->
+    <counter name="Data | Dictionaries - ReferringSites Reads / sec" type="Default" description="The number of ReferringSites dictionary read operations."/>
+    <counter name="Data | Dictionaries - ReferringSites Cache Hits / sec" type="Default" description="The number of ReferringSites dictionary cache hits."/>
+    <counter name="Data | Dictionaries - ReferringSites Database Reads / sec" type="Default" description="The number of ReferringSites dictionary database read operations."/>
+    <counter name="Data | Dictionaries - ReferringSites Writes / sec" type="Default" description="The number of ReferringSites dictionary write operations."/>
+
+    <!-- UserAgent dictionary counters:-->
+    <counter name="Data | Dictionaries - UserAgents Reads / sec" type="Default" description="The number of UserAgent dictionary read operations."/>
+    <counter name="Data | Dictionaries - UserAgents Cache Hits / sec" type="Default" description="The number of UserAgent dictionary cache hits."/>
+    <counter name="Data | Dictionaries - UserAgents Database Reads / sec" type="Default" description="The number of UserAgent dictionary database read operations."/>
+    <counter name="Data | Dictionaries - UserAgents Writes / sec" type="Default" description="The number of UserAgent dictionary write operations."/>
+
+    <!-- GeoIp dictionary counters:-->
+    <counter name="Data | Dictionaries - GeoIps Reads / sec" type="Default" description="The number of GeoIp dictionary read operations."/>
+    <counter name="Data | Dictionaries - GeoIps Cache Hits / sec" type="Default" description="The number of GeoIp dictionary cache hits."/>
+    <counter name="Data | Dictionaries - GeoIps Database Reads / sec" type="Default" description="The number of GeoIp dictionary database read operations."/>
+    <counter name="Data | Dictionaries - GeoIps Writes / sec" type="Default" description="The number of GeoIp dictionary write operations."/>
+   
+    <!-- Aggregation Counters: -->
+    <counter name="Data | Aggregation - Visits saved to reporting database / sec" shortname="DataAggregationSavedToReportStore" type="Default" description="The number of visits saved to the reporting database per second."/>
+
+    <!-- GeoIP Counters: -->
+    <counter name="GeoIP | Requests - Total / sec" type="Default" description="The total number of GeoIP requests per second. This includes requests originating from pages and requests from a background job."/>
+    <counter name="GeoIP | Requests - Pages / sec" type="Default" description="The number of GeoIP requests per second that originate from pages."/>
+    <counter name="GeoIP | Requests - Background / sec" type="Default" description="The number of GeoIP requests per second that originate from a background job."/>
+    <counter name="GeoIP | Memory Lookups / sec" type="Default" description="The number of GeoIP requests per second that are resolved from local memory."/>
+    <counter name="GeoIP | Database Lookups / sec" type="Default" description="The number of GeoIP requests per second that are resolved from the Analytics database."/>
+    <counter name="GeoIP | Provider Lookups / sec" type="Default" description="The number of GeoIP requests per second that are resolved using the external GeoIP provider."/>
+    <counter name="GeoIP | Failed Lookups / sec" type="Default" description="The number of GeoIP per second requests that are not resolved."/>
+    <counter name="GeoIP | Unknown IPs / sec" type="Default" description="The number of GeoIP requests per second that are resolved as &quot;Unknown IP&quot;."/>
+    <counter name="GeoIP | Average Resolve Time" type="Average" description="The average time in milliseconds it takes to resolve a GeoIP request."/>
+    <counter name="GeoIP | Cache Size" type="Absolute" description="The number of entries in the GeoIP cache."/>
+    <counter name="GeoIP | Visits Updated / sec" type="Default" description="The number of visits per second where the GeoIP information is updated by the background job."/>
+    <counter name="GeoIP | Average Calls Before IP Resolved" type="Average" description="The average number of requests the GeoIP subsystem receives while the IP information is being resolved."/>
+
+    <counter name="Aggregation | Live Interactions Processed / sec" type="AmountPerSecond" description="The number of interactions processed when updating the primary reporting database."/>
+    <counter name="Aggregation | History Interactions Processed / sec" type="AmountPerSecond" description="The number of aggregations processed when rebuilding the secondary reporting database."/>
+    <counter name="Aggregation | Total Interactions Processed / sec" type="AmountPerSecond" description="The total number of interactions processed by the aggregation subsystem."/>
+    <counter name="Aggregation | Live Aggregation Errors / sec" type="AmountPerSecond" description="The number of interactions which could not be aggregated due to an exception, when updating the primary reporting database."/>
+    <counter name="Aggregation | History Aggregation Errors / sec" type="AmountPerSecond" description="The number of interactions which could not be aggregated due to an exception, when updating the secondary reporting database."/>
+    <counter name="Aggregation | Total Aggregation Errors / sec" type="AmountPerSecond" description="The total number of interactions which could not be aggregated due to an exception."/>
+
+    <counter name="Aggregation | Average Aggregation Pipeline Time (ms)" type="Average" description="Average time it takes to aggregate a single interaction (including loading all required infromation, but not including time to write to reporting databases.)"/>
+    <counter name="Aggregation | Average Write Time (ms)" type="Average" description="Average time it takes to save aggregated data to the reporting database."/>
+
+    <counter name="Aggregation | Average Write Time - Primary (ms)" type="Average" description="Average time in milliseconds it takes to submit an aggregated interaction to the primary reporting database"/>
+    <counter name="Aggregation | Average Write Time - Secondary, Live (ms)" type="Average" description="Average time in milliseconds it takes to submit an aggregated interaction to the secondary reporting database, when updating the reporting databases with incoming interactions."/>
+    <counter name="Aggregation | Average Write Time - Secondary, History (ms)" type="Average" description="Average time in milliseconds it takes to submit an aggregated interaction to the secondary reporting database, when writing historical interactions during database rebuild process."/>
+
+    <counter name="Aggregation | Active Interaction Aggregators" type="Absolute" description="The number concurrent threads running the aggregation pipeline." />
+
+    <counter name="Aggregation | Average Check Out Time - Live (ms)" type="Average" description="Average time it takes to obtain a work item from a processing pool while processing live visits."/>
+    <counter name="Aggregation | Average Check In Time - Live (ms)" type="Average" description="Average time it takes to mark a work item as completed in a processing pool while processing live visits."/>
+    <counter name="Aggregation | Average Check Out Time - History (ms)" type="Average" description="Average time it takes to obtain a work item from a range scheduler while rebuilding the reporting database."/>
+    <counter name="Aggregation | Average Check In Time - History (ms)" type="Average" description="Average time it takes to mark a work item as completed in a range scheduler while rebuilding the reporting database."/>
+  </category>
+</counters>

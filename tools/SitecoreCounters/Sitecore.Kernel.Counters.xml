@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<counters xmlns="urn:sitecore:core:performancecounters" >
+  <category name="Sitecore.Caching" description="Sitecore caching related counters">
+    <counter name="Cache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a cache has been cleared."/>
+    <counter name="Cache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all caches."/>
+    <counter name="Cache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all caches."/>
+    <counter name="Data Cache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a data cache has been cleared."/>
+    <counter name="Data Cache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all data caches."/>
+    <counter name="Data Cache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all data caches."/>
+    <counter name="Html Cache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a html cache has been cleared."/>
+    <counter name="Html Cache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all html caches."/>
+    <counter name="Html Cache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all html caches."/>
+    <counter name="Path Cache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a path cache has been cleared."/>
+    <counter name="Path Cache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all path caches."/>
+    <counter name="Path Cache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all path caches."/>
+    <counter name="Registry Cache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a registry cache has been cleared."/>
+    <counter name="Registry Cache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all registry caches."/>
+    <counter name="Registry Cache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all registry caches."/>
+    <counter name="View State Cache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a view state cache has been cleared."/>
+    <counter name="View State Cache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all view state caches."/>
+    <counter name="View State Cache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all view state caches."/>
+    <counter name="XslCache Clearings / sec" type="AmountPerSecond" description="Total number of times that an instance of a xsl cache has been cleared."/>
+    <counter name="XslCache Hits / sec" type="AmountPerSecond" description="Total number of cache hits for all xsl caches."/>
+    <counter name="XslCache Misses / sec" type="AmountPerSecond" description="Total number of cache hits for all xsl caches."/>
+  </category>
+  <category name="Sitecore.Data" description="Sitecore data related counters">
+    <counter name="Data | Client Data Reads / sec" type="AmountPerSecond" description="The total number of client data values that have been read."/>
+    <counter name="Data | Client Data Writes / sec" type="AmountPerSecond" description="The total number of client data values that have been written."/>
+    <counter name="Data | Items Accessed / sec" type="AmountPerSecond" description="The total number of items that have been accessed."/>
+    <counter name="Data | Physical Reads / sec" type="AmountPerSecond" description="The total number of read operations that have been performed against the physical storage medium (typically a RDBMS)."/>
+    <counter name="Data | Physical Writes / sec" type="AmountPerSecond" description="The total number of write operations that have been performed against the physical storage medium (typically a RDBMS)."/>
+    <counter name="Globalization | Texts Translated / sec" type="AmountPerSecond" description="The total number of texts that have been translated."/>
+    <counter name="Globalization | Translate Failed / sec" type="AmountPerSecond" description="The total number of times a translate operation has failed (ie. the text was not in the dictionary)."/>
+    <counter name="Links | Fields Examined / sec" type="AmountPerSecond" description="The total number of fields that have been scanned for links."/>
+    <counter name="Links | Data Read / sec" type="AmountPerSecond" description="The total number of read operations that have been performed against the link database."/>
+    <counter name="Links | Data Updated / sec" type="AmountPerSecond" description="The total number of update operations that have been performed against the link database."/>
+    <counter name="Packager | Packages Built / sec" type="AmountPerSecond" description="The total number of packages that have been built."/>
+    <counter name="Packager | Packages Installed / sec" type="AmountPerSecond" description="The total number of packages tahe have been installed."/>
+    <counter name="Shadows | Data Read / sec" type="AmountPerSecond" description="The total number of read operations that have been performed against the shadows database."/>
+    <counter name="Shadows | Data Updated / sec" type="AmountPerSecond" description="The total number of update operations that have been performed against the shadows database."/>
+    <counter name="SqlServerStream | Open Streams / sec" type="AmountPerSecond" description="The current number of open SQL Server streams."/>
+    <counter name="StreamSharer | Open Streams / sec" type="AmountPerSecond" description="The current number of open streams being handled by stream sharers."/>
+    <counter name="Workflow | Actions Executed / sec" type="AmountPerSecond" description="The total number of workflow actions that have been executed."/>
+    <counter name="Workflow | Security Resolved / sec" type="AmountPerSecond" description="The total number of times the workflow engine has resolved an access request."/>
+    <counter name="Workflow | State Changes / sec" type="AmountPerSecond" description="The total number of times that a workflow has changed state."/>
+  </category>
+  <category name="Sitecore.Jobs" description="Sitecore job related counters">
+    <counter name="Jobs | Jobs Executed / sec" type="AmountPerSecond" description="The total number of jobs that have been executed."/>
+    <counter name="Pipelines | Pipelines Aborted / sec" type="AmountPerSecond" description="The total number of times a pipeline was aborted."/>
+    <counter name="Pipelines | Pipelines Executed / sec" type="AmountPerSecond" description="The total number of times a pipeline was executed."/>
+    <counter name="Pipelines | Processors Executed / sec" type="AmountPerSecond" description="The total number of processors that have been executed."/>
+    <counter name="Publishing | Items Queued / sec" type="AmountPerSecond" description="The total number of items that have been queued for publishing."/>
+    <counter name="Publishing | Replacements / sec" type="AmountPerSecond" description="The total number of publishing replacement operations that have been performed."/>
+    <counter name="Tasks | File Cleanups / sec" type="AmountPerSecond" description="The total number of times the CleanupAgent task has been run."/>
+    <counter name="Tasks | Html Cache Clearings / sec" type="AmountPerSecond" description="The total number of times the HtmlCacheClearAgent task has been run."/>
+    <counter name="Tasks | Publishings / sec" type="AmountPerSecond" description="The total number of times the PublishAgent task has been run."/>
+    <counter name="Tasks | Reminders Sent / sec" type="AmountPerSecond" description="The total number of reminders that have been sent."/>
+    <counter name="Tasks | Tasks Executed / sec" type="AmountPerSecond" description="The total number of tasks that has been run."/>
+  </category>
+  <category name="Sitecore.Presentation" description="Sitecore presentation related counters">
+    <counter name="Context | Site Changed / sec" type="AmountPerSecond" description="The total number of times the active site has been changed by the API."/>
+    <counter name="Rendering | Controls Rendered / sec" type="AmountPerSecond" description="The total number of Sitecore controls rendered."/>
+    <counter name="Rendering | Controls Rendered From Cache / sec" type="AmountPerSecond" description="The total number of Sitecore controls rendered from a cache."/>
+    <counter name="Rendering | Pages Generated / sec" type="AmountPerSecond" description="The total number of web pages generated by Sitecore."/>
+    <counter name="Rendering | Renderings Rendered / sec" type="AmountPerSecond" description="The total number of Renderings rendered."/>
+    <counter name="Rendering | Sublayouts Rendered / sec" type="AmountPerSecond" description="The total number of Sublayouts rendered."/>
+    <counter name="Rendering | XmlControls Compiled / sec" type="AmountPerSecond" description="The total number of XmlControls compiled."/>
+    <counter name="Rendering | Xsl Transforms Rendered / sec" type="AmountPerSecond" description="The total number of XslTransforms rendered."/>
+    <counter name="Rendering | Xaml Controls Compiled / sec" type="AmountPerSecond" description="The total number of XamlControls compiled."/>
+  </category>
+  <category name="Sitecore.Security" description="Sitecore security related counters">
+    <counter name="Access Denied / sec" type="AmountPerSecond" description="The total number of access requests that have been denied."/>
+    <counter name="Access Granted / sec" type="AmountPerSecond" description="The total number of access requests that have been granted."/>
+    <counter name="Access Resolved / sec" type="AmountPerSecond" description="The total number of access requests that have been resolved."/>
+    <counter name="Modify Requests / sec" type="AmountPerSecond" description="The total number of access requests where the desired access would allow the caller to modify data (ie. update or delete an item)."/>
+    <counter name="Programmatic Disabling / sec" type="AmountPerSecond" description="The total number of times that security has been programmatically disabled (using SecurityDisabler)."/>
+    <counter name="Programmatic Enabling / sec" type="AmountPerSecond" description="The total number of times that security has been programmatically enabled (using SecurityEnabler)."/>
+    <counter name="Programmatic User Switch / sec" type="AmountPerSecond" description="The total number of times that the current user has been switched programmatically (using SecuritySwitcher)."/>
+    <counter name="Read Requests / sec" type="AmountPerSecond" description="The total number of access requests where the desired access would allow the caller to read data (ie. reading an item)."/>
+    <counter name="Virtual Users Built / sec" type="AmountPerSecond" description="The total number of virutal users that have been built."/>
+  </category>
+  <category name="Sitecore.System" description="Sitecore system related counters">
+    <counter name="Events | Events Raised / sec" type="AmountPerSecond" description="The total number of events that have been raised by the API."/>
+    <counter name="Exceptions | Exceptions Thrown / sec" type="AmountPerSecond" description="The total number of exceptions thrown by the API."/>
+    <counter name="IO | File Watcher Events / sec" type="AmountPerSecond" description="The total number of file watcher events that have been handled by the API."/>
+    <counter name="Logging | Errors Logged / sec" type="AmountPerSecond" description="The number of error messages that have been sent to the log."/>
+    <counter name="Logging | Fatals Logged / sec" type="AmountPerSecond" description="The number of fatal messages that have been sent to the log."/>
+    <counter name="Logging | Informations Logged / sec" type="AmountPerSecond" description="The number of information messages that have been sent to the log."/>
+    <counter name="Logging | Warnings Logged / sec" type="AmountPerSecond" description="The number of warning messages that have been sent to the log."/>
+    <counter name="Logging | Audits Logged / sec" type="AmountPerSecond" description="The number of audit messages that have been sent to the log."/>
+    <counter name="Reflection | Methods Invoked / sec" type="AmountPerSecond" description="The total number of methods that have been invoked through reflection."/>
+    <counter name="Reflection | Objects Created / sec" type="AmountPerSecond" description="The total number of objects that have been created using reflection."/>
+    <counter name="Reflection | Objects Not Created / sec" type="AmountPerSecond" description="The total number of objects where the creation through reflection failed (due to unknown types or constructors)."/>
+    <counter name="Reflection | Types Resolved / sec" type="AmountPerSecond" description="The total number of types that have been resolved using reflection."/>
+    <counter name="Reflection | Types Not Resolved / sec" type="AmountPerSecond" description="The total number of types where the resolving through reflection failed (due to unknown types or other causes)."/>
+    <counter name="Threading | Background Threads Started / sec" type="AmountPerSecond" description="The total number of background threads that have been started by the API."/>
+    <counter name="Threading | Thread Data Modified / sec" type="AmountPerSecond" description="The total number of times data in a thread local storage (TLS) slot have been modified."/>
+    <counter name="Threading | Thread Data Read / sec" type="AmountPerSecond" description="The total number of times data in a thread local storage (TLS) slot have been read."/>
+    <counter name="Xml | Item Navigators Created / sec" type="AmountPerSecond" description="The total number of ItemNavigator instances that have been created."/>
+    <counter name="Xml | Packets Created / sec" type="AmountPerSecond" description="The total number of Packet instances that have been created."/>
+    </category>
+  </counters>
