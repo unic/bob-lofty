@@ -16,3 +16,12 @@ To integrate Lofty on Octopus Deploy add a NuGet step at the beginning of the de
 In further steps you can then use the following snippet to use Loftys features.
 
     Import-Module "$($OctopusParameters['Octopus.Action[Lofty].Output.Package.InstallationDirectoryPath'])\Lofty"
+
+## Load balancer integration
+Before using one of the `*-LB*` cmdlet, you need to connect to the load balancer. This can be achieved by running the following command:
+
+    Initialize-F5.iControl -HostName $BigIPHostname -Username $Username -Password $Password
+
+E.g:
+
+    Initialize-F5.iControl -HostName unic-dev-bigip1.p.unic24.net -Username octopus -Password $Password
