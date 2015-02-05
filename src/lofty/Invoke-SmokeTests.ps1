@@ -29,11 +29,15 @@ function Invoke-SmokeTests
 
         $env:UNIC_PHANTOMJS_PATH = $phantomFolder
         & "$ToolsLocation\Nunit\bin\nunit-console.exe" $TestDllPath
+        $failed = $false
         if($LASTEXICODE -ne 1) {
-            Write-Error "SmokeTests failed."
+            $failed = $true
         }
         if(Get-Command "New-OctopusArtifact") {
             New-OctopusArtifact -Path TestResult.xml
+        }
+        if($failed) {
+            Write-Error "SmokeTests failed."
         }
     }
 }
