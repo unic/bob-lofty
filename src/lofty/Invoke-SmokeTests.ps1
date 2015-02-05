@@ -34,8 +34,10 @@ function Invoke-SmokeTests
             $failed = $true
         }
         if(Get-Command "New-OctopusArtifact") {
+            Write-Verbose "Publishing TestResult.xml to Octopus"
             New-OctopusArtifact -Path TestResult.xml
         }
+
         if($failed) {
             Write-Error "SmokeTests failed."
         }
