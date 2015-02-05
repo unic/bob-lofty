@@ -32,5 +32,8 @@ function Invoke-SmokeTests
         if($LASTEXICODE -ne 1) {
             Write-Error "SmokeTests failed."
         }
+        if(Get-Command "New-OctopusArtifact") {
+            New-OctopusArtifact -Path TestResult.xml
+        }
     }
 }
