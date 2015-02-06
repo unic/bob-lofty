@@ -28,13 +28,13 @@ function Invoke-SmokeTests
         }
 
         $env:UNIC_PHANTOMJS_PATH = $phantomFolder
-        #& "$ToolsLocation\Nunit\bin\nunit-console.exe" $TestDllPath
+        & "$ToolsLocation\Nunit\bin\nunit-console.exe" $TestDllPath
         $failed = $false
         if($LASTEXICODE -ne 1) {
             $failed = $true
         }
 
-        $reportGenerator = ResolveBinPath "NUnitHTMLReportGenerator" "NUnitHTMLReportGenerator.exe"
+        $reportGenerator = ResolveBinPath "NUnitHTMLReportGenerator\NUnitHTMLReportGenerator.exe"
         & $reportGenerator ".\TestResult.xml" "TestResult.html"
 
         if($failed) {
