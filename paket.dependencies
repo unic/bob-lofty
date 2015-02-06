@@ -7,5 +7,3 @@ source https://teamcity.unic.com/httpAuth/app/nuget/v1/FeedService.svc/ username
 nuget Unic.Bob.Config
 nuget Unic.Bob.Rubble
 nuget Unic.Bob.Keith Prerelease
-
-http https://github.com/JatechUK/NUnit-HTML-Report-Generator/releases/download/1.0/NUnit.HTML.Report.Generator.v1.0.zip

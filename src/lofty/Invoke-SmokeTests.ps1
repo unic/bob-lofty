@@ -34,7 +34,7 @@ function Invoke-SmokeTests
             $failed = $true
         }
 
-        $reportGenerator = ResolvePath "github.com" "NUnitHTMLReportGenerator.exe"
+        $reportGenerator = ResolveBinPath "NUnitHTMLReportGenerator" "NUnitHTMLReportGenerator.exe"
         & $reportGenerator ".\TestResult.xml" "TestResult.html"
 
         if($failed) {
