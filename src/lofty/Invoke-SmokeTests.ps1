@@ -21,10 +21,10 @@ function Invoke-SmokeTests
     Process
     {
         $phantomFolder = "$ToolsLocation\PhantomJS\bin"
-        $phantomJsPath = "$phantomFolder\phantomjs.exe"
-        if( -not ((netsh advfirewall firewall show rule name=all verbose) | ? {$_.Contains($phantomJsPath)} )) {
-            Write-Verbose "Add firewall rule for $phantomJsPath"
-            netsh advfirewall firewall add rule name="PhantomJS" dir=in action=allow program=$phantomJsPath
+        $phantomJsExe = "$phantomFolder\phantomjs.exe"
+        if( -not ((netsh advfirewall firewall show rule name=all verbose) | ? {$_.Contains($phantomJsExe)} )) {
+            Write-Verbose "Add firewall rule for $phantomJsExe"
+            netsh advfirewall firewall add rule name="PhantomJS" dir=in action=allow program=$phantomJsExe
         }
 
         $env:UNIC_PHANTOMJS_PATH = $phantomFolder
