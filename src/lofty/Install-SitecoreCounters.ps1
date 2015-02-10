@@ -42,8 +42,8 @@ function Install-SitecoreCounters
     )
     Process
     {
-        if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).
-                    IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
+        $currentRole = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent())
+        if (-not $currentRole.IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
             Write-Error "PowerShell is not running as administrator. Sitecore Counters can only be installed as administrator."
         }
 
