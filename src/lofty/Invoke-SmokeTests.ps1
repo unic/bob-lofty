@@ -38,7 +38,7 @@ function Invoke-SmokeTests
         $env:UNIC_PHANTOMJS_PATH = $phantomJsPath
         & "$ToolsLocation\Nunit\bin\nunit-console.exe" $TestDllPath
         $failed = $false
-        if($$LASTEXITCODE -ne 0) {
+        if($LASTEXITCODE -ne 0) {
             $failed = $true
         }
 
