@@ -12,7 +12,7 @@ The name of the IIS site where anonymous authentication should be disabled.
 A list of folders where anonymous authentication should be disabled.
 
 .EXAMPLE
-Disable-ScAnonymousAuth jura-internet
+Disable-ScAnonymousAuth myIISSiteName
 
 #>
 function Disable-ScAnonymousAuth
