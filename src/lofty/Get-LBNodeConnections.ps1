@@ -30,7 +30,7 @@ function Get-LBNodeConnections
     {
         $ctrl = (Get-F5.iControl)
         $stats = $ctrl.LocalLBPoolMember.get_statistics($Pool, $IPPortDefinition)
-        ($stats.statistics.statistics | ? {$_.Type -eq "STATISTIC_SERVER_SIDE_CURRENT_CONNECTIONS"}).value.low
+        ($stats[0].statistics[0].statistics | ? {$_.Type -eq "STATISTIC_SERVER_SIDE_CURRENT_CONNECTIONS"}).value.low
 
     }
 }
