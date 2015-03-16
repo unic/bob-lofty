@@ -28,7 +28,13 @@ function Restore-UnmanagedFiles
     )
     Process
     {
-        cp $TempPath\* $WebPath -Recurse -Force
+        $config = Get-ScProjectConfig $WebPath
+        if($config.UnmanagedFiles) {
+            Copy-RubbleItem -Path $TempPath -Destination $WebPath -Pattern (Get-RubblePattern $config.UnmanagedFiles) -Verbose
+        }
+        else {
+            Write-Warning "No UnmanagedFiles are configured."
+        }
 
         rm $TempPath -Recurse
     }
