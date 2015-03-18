@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Cleanups the backup directory
+Cleans up the backup directory.
 
 .DESCRIPTION
-Cleanups the backup directory  by deleting all backups older than a specific
+Cleans up the backup directory by deleting all backups older than a specific
 amount of days, but by always keeping a minimum amount of backups.
 
 .PARAMETER BackupLocation

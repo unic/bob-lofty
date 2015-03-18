@@ -62,7 +62,7 @@ Describe "Backup-WebRoot" {
             Test-Path TestDrive:\5 | Should Be $true
         }
 
-        It "Should have delted the 6th backup" {
+        It "Should have deleted the 6th backup" {
             Test-Path TestDrive:\6 | Should Be $false
         }
     }
