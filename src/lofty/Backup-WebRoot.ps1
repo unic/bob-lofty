@@ -25,7 +25,7 @@ function Backup-WebRoot
     Param(
       [Parameter(Mandatory=$true)]
       [string] $Path,
-      [string] $BackupLocation = "D:\backup",
+      [string] $BackupLocation = "D:\Backup\OctopusDeploy",
       [string] $BackupFileName
     )
     Process
@@ -39,6 +39,8 @@ function Backup-WebRoot
             $BackupFileName = "$name-$($env:COMPUTERNAME)-$date.zip"
         }
 
+        $oldBackups = ls $BackupLocation
         Write-RubbleArchive -Path $Path -OutputLocation (Join-Path $BackupLocation $BackupFileName)
+
     }
 }
