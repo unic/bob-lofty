@@ -39,7 +39,6 @@ function Backup-WebRoot
             $BackupFileName = "$name-$($env:COMPUTERNAME)-$date.zip"
         }
 
-        $oldBackups = ls $BackupLocation
         Write-RubbleArchive -Path $Path -OutputLocation (Join-Path $BackupLocation $BackupFileName)
 
     }
