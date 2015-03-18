@@ -1,12 +1,15 @@
 <#
 .SYNOPSIS
+Get all backup files in a specific folder.
 
 .DESCRIPTION
+Get all backup files in a specific folder.
 
-
-.PARAMETER
+.PARAMETER BackupFolder
+The folder containing all backups.
 
 .EXAMPLE
+Get-Backup D:\Backup\OctopusDeploy
 
 #>
 function Get-Backup
@@ -14,10 +17,10 @@ function Get-Backup
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true)]
-        [string] $BackupFolder
+        [string] $BackupLocation
     )
     Process
     {
-        ls $BackupFolder -Include *.zip
+        ls "$BackupLocation\*.zip"
     }
 }
