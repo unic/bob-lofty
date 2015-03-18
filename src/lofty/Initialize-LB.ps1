@@ -27,11 +27,16 @@ function Initialize-LB
         [Parameter(Mandatory=$true)]
         [string] $Username,
         [Parameter(Mandatory=$true)]
-        [string] $Password
+        [string] $Password,
+        [string] $Partition
     )
     Process
     {
         if(Initialize-F5.iControl -HostName $HostName -Username $Username -Password $Password) {
+            if($Partition) {
+                $ctrl = (Get-F5.iControl)
+                $ctrl.ManagementPartition.set_active_partition($Partition)
+            }
             Write-Verbose "Connected to $HostName"
         }
         else {
