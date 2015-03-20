@@ -22,7 +22,7 @@ Describe "Backup-WebRoot" {
             (New-Object PSObject -Property @{"LastWriteTime"= [datetime]"2015-03-13"; "FullName" = "TestDrive:\5"}))
         }
 
-        Cleanup-Backup -MinimumBackups 1
+        Clear-Backup -MinimumBackups 1
 
         It "Should have delete the backups older than 7 days" {
             Test-Path TestDrive:\1 | Should Be $false
@@ -52,7 +52,7 @@ Describe "Backup-WebRoot" {
             (New-Object PSObject -Property @{"LastWriteTime"= [datetime]"2015-03-4"; "FullName" = "TestDrive:\5"}))
         }
 
-        Cleanup-Backup
+        Clear-Backup
 
         It "Should not have deleted the 5 newest backups" {
             Test-Path TestDrive:\1 | Should Be $true
