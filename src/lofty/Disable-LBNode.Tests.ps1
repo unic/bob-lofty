@@ -57,7 +57,7 @@ Describe "Disable-LBNode" {
         $global:sleepTime = 0
         Mock Start-Sleep {$global:sleepTime += $Seconds * 1000 + $Milliseconds} -Verifiable
         Mock Get-Date {
-            (New-Object DateTime).AddMilliseconds($global:sleepTime);
+            [TimeSpan]::FromMilliseconds($global:sleepTime)
         }
 
         Disable-LBNode dummy dummy 0.15 5

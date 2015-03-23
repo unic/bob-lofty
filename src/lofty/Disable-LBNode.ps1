@@ -52,7 +52,7 @@ function Disable-LBNode
             Write-Verbose "Node had $startConnections connections. Waiting until they drop below $targetConnections"
             $connections = Get-LBNodeConnections $node.Pool $node.IPPortDefinition
             $startTime = Get-Date
-            while($connections -gt $targetConnections -and ((Get-Date) - $startTime).Seconds -lt $TimeoutSeconds) {
+            while($connections -gt $targetConnections -and ((Get-Date) - $startTime).TotalSeconds -lt $TimeoutSeconds) {
                 sleep -s 1
                 $connections = Get-LBNodeConnections $node.Pool $node.IPPortDefinition
                 Write-Verbose "There are $connections connections after waiting $(((Get-Date) - $startTime).Seconds) seconds."
