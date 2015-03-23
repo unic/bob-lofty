@@ -55,7 +55,7 @@ function Disable-LBNode
             while($connections -gt $targetConnections -and ((Get-Date) - $startTime).TotalSeconds -lt $TimeoutSeconds) {
                 sleep -s 1
                 $connections = Get-LBNodeConnections $node.Pool $node.IPPortDefinition
-                Write-Verbose "There are $connections connections after waiting $(((Get-Date) - $startTime).Seconds) seconds."
+                Write-Verbose "There are $connections connections after waiting $(((Get-Date) - $startTime).TotalSeconds) seconds."
             }
         }
         else {
