@@ -1,7 +1,14 @@
-$nuget = "$PSScriptRoot\nuget.exe"
+$Invocation = (Get-Variable MyInvocation -Scope 0).Value
+$PSScriptRoot = Split-Path $Invocation.MyCommand.Path
 
-if(-not (Test-Path $nuget)) {
-  Invoke-WebRequest "https://nuget.org/nuget.exe" -OutFile $nuget
+$paketFolder = "$PSScriptRoot\.paket"
+$paketBoot = "$paketFolder\paket.bootstrapper.exe"
+
+& $paketBoot
+& "$paketFolder\paket.exe" restore
+
+if($LASTEXITCODE -ne 0) {
+    if($env:TEAMCITY_VERSION) {
+        exit 1
+    }
 }
-
-& $nuget install packages.config -o packages -ExcludeVersion
