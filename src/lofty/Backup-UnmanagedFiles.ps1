@@ -30,7 +30,7 @@ function Backup-UnmanagedFiles
     $tempBackup = Join-Path $env:TEMP ([GUID]::NewGuid())
     mkdir $tempBackup | Out-Null
 
-    mv $WebPath\* $tempBackup
+    cp $WebPath\* $tempBackup -Recurse
 
     $tempBackup
   }
