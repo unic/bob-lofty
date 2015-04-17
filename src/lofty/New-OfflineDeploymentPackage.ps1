@@ -48,7 +48,7 @@ function New-OfflineDeploymentPackage
             $docRoot.AppendChild($element)
         }
 
-        $doc.Save("$($pwd.Path)\config.xml")s
+        $doc.Save("$($pwd.Path)\config.xml")
 
         Pop-Location
 
