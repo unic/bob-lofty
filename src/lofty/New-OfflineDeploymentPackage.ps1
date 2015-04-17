@@ -54,5 +54,8 @@ function New-OfflineDeploymentPackage
 
         Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath ".\$PackageName.zip"
         rm $tempDirectory -Recurse
+        New-OctopusArtifact (Resolve-Path ".\$PackageName.zip")
+
+
     }
 }
