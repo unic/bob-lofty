@@ -9,11 +9,13 @@ function New-OfflineDeploymentPackage
         [Parameter(Mandatory=$true)]
         [string] $TargetAppPoolName,
         [Parameter(Mandatory=$true)]
-        [string] $PackageName
+        [string] $PackageName,
+        [Parameter(Mandatory=$true)]
+        [string] $WorkingDirectory
     )
     Process
     {
-        $tempDirectory = ".\" + [Guid]::NewGuid()
+        $tempDirectory = "$WorkingDirectory\" + [Guid]::NewGuid()
         $tempWorkingDirectory = "$tempDirectory\$PackageName"
         mkdir $tempWorkingDirectory
         Push-Location $tempWorkingDirectory
