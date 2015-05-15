@@ -1,5 +1,8 @@
 $ErrorActionPreference = "Stop"
 
+Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.tests.ps1| Foreach-Object{ . $_.FullName }
+Export-ModuleMember -Function * -Alias *
+
 # TODO comment
 function ResolvePath() {
   param($PackageId, $RelativePath)
@@ -34,7 +37,5 @@ Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rub
 $WarningPreference = "SilentlyContinue"
 Import-Module (ResolveBinPath "iControl\iControlSnapIn.dll")
 $WarningPreference = "Continue"
-Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.tests.ps1| Foreach-Object{ . $_.FullName }
-Export-ModuleMember -Function * -Alias *
 
 $VerbosePreference = "Continue"
