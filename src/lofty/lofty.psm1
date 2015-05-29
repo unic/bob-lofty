@@ -34,6 +34,9 @@ function ResolveBinPath() {
 
 Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\BobConfig")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
+Import-Module (ResolvePath -PackageId "Unic.Bob.Scoop" -RelativePath "tools\Scoop")
+Export-ModuleMember -Function Install-ScSerializationPackage
+
 $WarningPreference = "SilentlyContinue"
 Import-Module (ResolveBinPath "iControl\iControlSnapIn.dll")
 $WarningPreference = "Continue"
