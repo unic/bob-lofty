@@ -54,11 +54,21 @@ function New-OfflineDeploymentPackage
 
         $doc.Save("$($pwd.Path)\config.xml")
 
+
+        $packagesPath = (Resolve-Path . ) + "$PackageName.zip"
+        Write-Host "Copy content of $tempWorkingDirectory to $packagesPath"
+        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
+        if(-not (Test-Path $TargetDirectory)) {
+            mkdir $TargetDirectory
+        }
+
+        Write-Host "Move $packagesPath $TargetDirectory"
+        mv $packagesPath $TargetDirectory
+
         Pop-Location
 
-        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath ".\$PackageName.zip"
-        cp ".\$PackageName.zip" $TargetDirectory
-        rm $tempDirectory -Recurse
+        rm $tempWorkingDirectory -Recurse
+
 
     }
 }
