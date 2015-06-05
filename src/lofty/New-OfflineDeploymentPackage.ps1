@@ -55,7 +55,7 @@ function New-OfflineDeploymentPackage
         $doc.Save("$($pwd.Path)\config.xml")
 
 
-        $packagesPath = (Resolve-Path . ) + "$PackageName.zip"
+        $packagesPath = (Resolve-Path . ).Path + "$PackageName.zip"
         Write-Host "Copy content of $tempWorkingDirectory to $packagesPath"
         Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
         if(-not (Test-Path $TargetDirectory)) {
