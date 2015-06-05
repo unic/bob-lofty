@@ -11,7 +11,9 @@ function New-OfflineDeploymentPackage
         [Parameter(Mandatory=$true)]
         [string] $PackageName,
         [Parameter(Mandatory=$true)]
-        [string] $WorkingDirectory
+        [string] $WorkingDirectory,
+        [Parameter(Mandatory=$true)]
+        [string] $TargetDirectory
     )
     Process
     {
@@ -55,9 +57,8 @@ function New-OfflineDeploymentPackage
         Pop-Location
 
         Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath ".\$PackageName.zip"
+        cp ".\$PackageName.zip" $TargetDirectory
         rm $tempDirectory -Recurse
-        New-OctopusArtifact (Resolve-Path ".\$PackageName.zip")
-
 
     }
 }
