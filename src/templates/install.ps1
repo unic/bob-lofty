@@ -14,10 +14,9 @@ if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
 }
 
-(ls "IIS:\AppPools\$appPoolName\WorkerProcesses") | % {Get-Process -Id $_.processId | Stop-Process -Confirm:$false}
-
 if ((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped"){
     Write-Host "Stopping IIS app pool $appPoolName"
+    (ls "IIS:\AppPools\$appPoolName\WorkerProcesses") | % {Get-Process -Id $_.processId | Stop-Process -Force}
     Stop-WebAppPool $appPoolName
 }
 
