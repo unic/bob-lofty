@@ -28,8 +28,9 @@ while((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped") {
 
 
 if(Test-Path $websiteLocation) {
+    Write-Host "Backup website at $websiteLocation"
     Backup-WebRoot -Path $websiteLocation
-    $unmanagedBackupLocation = Backup-UnmanagedFiles -WebPath $websiteLocation -Verbose
+    $unmanagedBackupLocation = (Get-Item (Backup-UnmanagedFiles -WebPath $websiteLocation -Verbose)).FullName
 
     Write-Host "Purge Website location $websiteLocation"
     rm "$websiteLocation\*" -Recurse -Force
