@@ -1,5 +1,7 @@
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 $ErrorActionPreference = "Stop"
+$originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
+(Get-Host).PrivateData.VerboseForegroundColor  = "White"
 
 Import-Module "$scriptPath\lofty\lofty"
 
@@ -50,3 +52,5 @@ if($unmanagedBackupLocation) {
 
 Write-host "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
+
+(Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor 
