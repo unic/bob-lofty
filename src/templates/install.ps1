@@ -1,3 +1,5 @@
+params($Silent = $false)
+
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 $ErrorActionPreference = "Stop"
 $originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
@@ -33,7 +35,7 @@ if(Test-Path $websiteLocation) {
     Backup-WebRoot -Path $websiteLocation
     $unmanagedBackupLocation = (Get-Item (Backup-UnmanagedFiles -WebPath $websiteLocation -Verbose)).FullName
 
-    Write-Host "Purge Website location $websiteLocation"
+    Write-Host "Purge website location $websiteLocation"
     rm "$websiteLocation\*" -Recurse -Force
 }
 else {
@@ -53,4 +55,9 @@ if($unmanagedBackupLocation) {
 Write-host "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-(Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor 
+(Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
+
+if(-not $Silent) {
+    Write-Host "Installation of Sitecore website done."
+    Read-Host
+}
