@@ -1,5 +1,15 @@
 param($Silent = $false)
 
+trap {
+    Write-Host ($_ | Out-String) -ForegroundColor Red
+
+    if(-not $Silent) {
+        Write-Host "An error occured during the installation of the website. Press enter to close the window..." -ForegroundColor Red
+        Read-Host
+        return
+    }
+}
+
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 $ErrorActionPreference = "Stop"
 $originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
@@ -13,7 +23,7 @@ Import-Module WebAdministration
 
 $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
-$targetUrl = $config.Url
+$targetUrl = $config.TargetUrl
 $itemPackages = $config.ItemPackages
 
 if(-not $websiteLocation) {
