@@ -1,9 +1,9 @@
-params($Silent = $false)
+param($Silent = $false)
 
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 $ErrorActionPreference = "Stop"
 $originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
-(Get-Host).PrivateData.VerboseForegroundColor  = "White"
+(Get-Host).PrivateData.VerboseForegroundColor  = (Get-Host).UI.RawUI.ForegroundColor
 
 Import-Module "$scriptPath\lofty\lofty"
 
@@ -58,6 +58,6 @@ Start-WebAppPool $appPoolName
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 
 if(-not $Silent) {
-    Write-Host "Installation of Sitecore website done."
+    Write-Host "Installation of Sitecore website done. Press a key to close the window.."
     Read-Host
 }

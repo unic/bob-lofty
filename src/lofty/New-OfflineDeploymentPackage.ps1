@@ -22,7 +22,7 @@ function New-OfflineDeploymentPackage
         mkdir $tempWorkingDirectory
         Push-Location $tempWorkingDirectory
 
-        cp "$PSScriptRoot\..\templates\install.ps1" .
+        cp "$PSScriptRoot\..\templates\*" .
 
         mkdir lofty
         cp "$PSScriptRoot\..\*" ".\lofty\" -Recurse
@@ -40,7 +40,7 @@ function New-OfflineDeploymentPackage
 
         $doc = New-Object System.XML.XMLDocument
         $docRoot = $doc.CreateElement("configuration")
-        $doc.AppendChild($docRoot)
+        $doc.AppendChild($docRoot) | Out-Null
 
         $config = @{
             "ApplicationPoolName" = $TargetAppPoolName;
@@ -52,11 +52,12 @@ function New-OfflineDeploymentPackage
             $docRoot.AppendChild($element)
         }
 
-        $doc.Save("$($pwd.Path)\config.xml")
-
+        $configPath = "$($pwd.Path)\config.xml"
+        $doc.Save($configPath)
+        Write-Host "Wrote config file at $configPath."
 
         $packagesPath = (Resolve-Path . ).Path + "\$PackageName.zip"
-        Write-Host "Copy content of $tempWorkingDirectory to $packagesPath"
+        Write-Host "Pack content of $tempWorkingDirectory to $packagesPath"
         Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
         if(-not (Test-Path $TargetDirectory)) {
             mkdir $TargetDirectory
