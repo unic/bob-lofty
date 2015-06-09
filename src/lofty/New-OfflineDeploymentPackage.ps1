@@ -13,7 +13,10 @@ function New-OfflineDeploymentPackage
         [Parameter(Mandatory=$true)]
         [string] $WorkingDirectory,
         [Parameter(Mandatory=$true)]
-        [string] $TargetDirectory
+        [string] $TargetDirectory,
+        [string] $TargetUrl,
+        [string] $ItemsPath,
+        [string] $ItemPackages
     )
     Process
     {
@@ -38,13 +41,20 @@ function New-OfflineDeploymentPackage
         mkdir website
         cp "$WebsitePath\*" .\website -Recurse
 
+        if($ItemsPath -and (Test-Path $ItemsPath)) {
+            mkdir items
+            cp "$ItemsPath\*" .\items -Recurse
+        }
+
         $doc = New-Object System.XML.XMLDocument
         $docRoot = $doc.CreateElement("configuration")
         $doc.AppendChild($docRoot) | Out-Null
 
         $config = @{
             "ApplicationPoolName" = $TargetAppPoolName;
-            "WebsiteLocation" = $TargetWebsitePath
+            "WebsiteLocation" = $TargetWebsitePath;
+            "TargetUrl" = $TargetUrl;
+            "ItemPackages" = $ItemPackages;
         }
         foreach($key in $config.Keys) {
             $element = $doc.CreateElement($key)

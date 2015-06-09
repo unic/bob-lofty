@@ -13,6 +13,8 @@ Import-Module WebAdministration
 
 $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
+$targetUrl = $config.Url
+$itemPackages = $config.ItemPackages
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
@@ -55,9 +57,20 @@ if($unmanagedBackupLocation) {
 Write-host "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
+$packages = $itemPackages.Split(";")
+
+foreach($package in $packages) {
+    $package = $package.Trim()
+    $package = "$scriptPath\items\$package"
+
+    if(Test-Path $package) {
+        Install-ScSerializationPackage -Path $package -Url $targetUrl
+    }
+}
+
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 
 if(-not $Silent) {
-    Write-Host "Installation of Sitecore website done. Press a key to close the window.."
+    Write-Host "Installation of Sitecore website done. Press a key to close the window..."
     Read-Host
 }
