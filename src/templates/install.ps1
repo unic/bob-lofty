@@ -6,14 +6,18 @@ trap {
     if(-not $Silent) {
         Write-Host "An error occured during the installation of the website. Press enter to close the window..." -ForegroundColor Red
         Read-Host
+        Stop-Transcript
         return
     }
 }
+
 
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 $ErrorActionPreference = "Stop"
 $originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
 (Get-Host).PrivateData.VerboseForegroundColor  = (Get-Host).UI.RawUI.ForegroundColor
+
+Start-Transcript "$scriptPath\$((Get-Date).ToString("yyyy-MM-dd-HH-mm")).log"
 
 Import-Module "$scriptPath\lofty\lofty"
 
@@ -84,3 +88,5 @@ if(-not $Silent) {
     Write-Host "Installation of Sitecore website done. Press a key to close the window..."
     Read-Host
 }
+
+Stop-Transcript
