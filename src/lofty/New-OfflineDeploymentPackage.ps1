@@ -1,3 +1,48 @@
+<#
+.SYNOPSIS
+Creates a new offline deployment package.
+
+.DESCRIPTION
+Creates a new deploymnet package which can then be transfered to a customer
+and installed offline.
+
+.PARAMETER WebsitePath
+The path to the web-root which should be packed in the offline package.
+
+.PARAMETER TargetWebsitePath
+The path on the offline server where the website should be deployed to.
+
+.PARAMETER TargetAppPoolName
+The name of the application pool on the offline server.
+
+.PARAMETER PackageName
+The name without extension the created ZIP file will get.
+
+.PARAMETER WorkingDirectory
+The directory where New-OfflineDeploymentPackage should move files arround
+and do its work.
+
+.PARAMETER TargetDirectory
+The folder where the package will be put at the end of package generation
+process.
+
+.PARAMETER TargetUrl
+The url of the Sitecore website on the target system.
+This will be used on the author system to install the items.
+
+.PARAMETER ItemsPath
+The path to the folder containing all item packages to install.
+
+.PARAMETER ItemPackages
+A list of file names of item packages which must be in the `ItemsPath`.
+All file names must be separated by a `;`.
+
+.EXAMPLE
+New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
+    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items" `
+    -ItemPackages items.update
+
+#>
 function New-OfflineDeploymentPackage
 {
     [CmdletBinding()]
