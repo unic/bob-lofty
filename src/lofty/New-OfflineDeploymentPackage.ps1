@@ -3,7 +3,7 @@
 Creates a new offline deployment package.
 
 .DESCRIPTION
-Creates a new deploymnet package which can then be transfered to a customer
+Creates a new deployment package which can then be transfered to a customer
 and installed offline.
 
 .PARAMETER WebsitePath
