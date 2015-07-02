@@ -7,7 +7,7 @@ Lofty is the toolset for performing deployments. Basically it is a PowerShell mo
 ## Specify Version in Project
 To secify the version of Lofty to use in a project add LoftyVersion key to Bob.config:
 
-    <LoftyVersion>0.1</LoftyVersion>
+    <LoftyVersion>1.1.0</LoftyVersion>
 
 
 ## Octopus Deploy  Integration
