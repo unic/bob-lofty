@@ -1,2 +1,3 @@
+
+* [Changelog](CHANGELOG.md)
 ##API##
-* [Changelog](Changelog.md)
