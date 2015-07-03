@@ -19,6 +19,9 @@ $originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
 
 Start-Transcript "$scriptPath\$((Get-Date).ToString("yyyy-MM-dd-HH-mm")).log"
 
+& "$scriptPath\lofty\tools\streams\streams" -d "$scriptPath\lofty\tools\iControl\iControl.dll" /accepteula | Out-Null
+& "$scriptPath\lofty\tools\streams\streams" -d "$scriptPath\lofty\tools\iControl\iControlSnapIn.dll" /accepteula | Out-Null
+
 Import-Module "$scriptPath\lofty\lofty"
 
 $config = ([xml](Get-Content "$scriptPath\Config.xml")).Configuration
@@ -78,6 +81,7 @@ foreach($package in $packages) {
     $package = "$scriptPath\items\$package"
 
     if(Test-Path $package) {
+        Write-Output "Installing items package $package to $targetUrl. This will take a moment..."
         Install-ScSerializationPackage -Path $package -Url $targetUrl
     }
 }
