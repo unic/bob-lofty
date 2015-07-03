@@ -1,10 +1,10 @@
 param($Silent = $false)
 
 trap {
-    Write-Host ($_ | Out-String) -ForegroundColor Red
+    Write-Output ($_ | Out-String) -ForegroundColor Red
 
     if(-not $Silent) {
-        Write-Host "An error occured during the installation of the website. Press enter to close the window..." -ForegroundColor Red
+        Write-Output "An error occured during the installation of the website. Press enter to close the window..." -ForegroundColor Red
         Read-Host
         Stop-Transcript
         return
@@ -35,23 +35,23 @@ if(-not $websiteLocation) {
 }
 
 if ((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped"){
-    Write-Host "Stopping IIS app pool $appPoolName"
+    Write-Output "Stopping IIS app pool $appPoolName"
     (ls "IIS:\AppPools\$appPoolName\WorkerProcesses") | % {Get-Process -Id $_.processId | Stop-Process -Force}
     Stop-WebAppPool $appPoolName
 }
 
 while((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped") {
-    Write-Host "Application Pool $appPoolName not yet stopped."
+    Write-Output "Application Pool $appPoolName not yet stopped."
     sleep -Milliseconds 500
 }
 
 
 if(Test-Path $websiteLocation) {
-    Write-Host "Backup website at $websiteLocation"
+    Write-Output "Backup website at $websiteLocation"
     Backup-WebRoot -Path $websiteLocation
     $unmanagedBackupLocation = (Get-Item (Backup-UnmanagedFiles -WebPath $websiteLocation -Verbose)).FullName
 
-    Write-Host "Purge website location $websiteLocation"
+    Write-Output "Purge website location $websiteLocation"
     rm "$websiteLocation\*" -Recurse -Force
 }
 else {
@@ -59,16 +59,16 @@ else {
 }
 
 
-Write-Host "Copy content of $scriptPath\website to  $websiteLocation"
+Write-Output "Copy content of $scriptPath\website to  $websiteLocation"
 cp  "$scriptPath\website\*" "$websiteLocation\" -Recurse
 
 
-Write-host "Restore unmanaged files from $BackupPath to $websiteLocation"
+Write-Output "Restore unmanaged files from $unmanagedBackupLocation to $websiteLocation"
 if($unmanagedBackupLocation) {
     Restore-UnmanagedFiles -WebPath $websiteLocation -TempPath $unmanagedBackupLocation
 }
 
-Write-host "Starting IIS app pool $appPoolName"
+Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
 $packages = $itemPackages.Split(";")
@@ -85,7 +85,7 @@ foreach($package in $packages) {
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 
 if(-not $Silent) {
-    Write-Host "Installation of Sitecore website done. Press a key to close the window..."
+    Write-Output "Installation of Sitecore website done. Press a key to close the window..."
     Read-Host
 }
 
