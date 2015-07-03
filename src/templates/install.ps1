@@ -19,6 +19,9 @@ $originalVeboseColor = (Get-Host).PrivateData.VerboseForegroundColor
 
 Start-Transcript "$scriptPath\$((Get-Date).ToString("yyyy-MM-dd-HH-mm")).log"
 
+& "$scriptPath\lofty\tools\streams" -d "$scriptPath\lofty\iControl\iControl.dll"
+& "$scriptPath\lofty\tools\streams" -d "$scriptPath\lofty\iControl\iControlSnapIn.dll"
+
 Import-Module "$scriptPath\lofty\lofty"
 
 $config = ([xml](Get-Content "$scriptPath\Config.xml")).Configuration
