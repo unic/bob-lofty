@@ -78,6 +78,7 @@ foreach($package in $packages) {
     $package = "$scriptPath\items\$package"
 
     if(Test-Path $package) {
+        Write-Output "Installing items package $package to $targetUrl. This will take a moment..."
         Install-ScSerializationPackage -Path $package -Url $targetUrl
     }
 }
