@@ -36,7 +36,7 @@ The passwords are stored in BU ECS password manager.
 
 In order to be able to reach this servers from your local machine you must be connected to VPN
 and you may need to add some routes to the servers:
-Get the index of your network interace by running `Get-NetRoute`.
+Get the index of your network interface by running `Get-NetRoute`.
 There should be a lot of entries in a 172.2* network. Note down the "ifIndex"
 value for this route. Then perform an nslookup for the wished system to get his IP.
 You can then run the following command to add the route, where "[IP of the load balancer]" is the
