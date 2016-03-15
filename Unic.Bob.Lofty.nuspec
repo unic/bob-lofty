@@ -10,7 +10,7 @@
   </metadata>
   <files>
     <file src="src\**" />
-    <file src="packages\**" target="tools" exclude="**\Unic.Bob.Keith\**" />
+    <file src="packages\**" target="tools" exclude="**\Unic.Bob.Keith\**;**\pester\**" />
     <file src="tools\**" target="tools" />
   </files>
 </package>
