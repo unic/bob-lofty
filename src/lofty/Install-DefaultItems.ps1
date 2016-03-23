@@ -1,3 +1,22 @@
+<#
+.SYNOPSIS
+Install the default items to the Sitecore website.
+
+.DESCRIPTION
+Install the default items to the Sitecore website
+
+.PARAMETER Url
+
+.PARAMETER ItemReferencesPath
+
+
+.PARAMETER TempItemspath
+
+
+
+.EXAMPLE
+
+#>
 function Install-DefaultItems {
     [CmdletBinding()]
     Param(
