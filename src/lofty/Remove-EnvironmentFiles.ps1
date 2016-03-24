@@ -31,7 +31,7 @@ function Remove-EnvironmentFiles
     [Parameter(Mandatory=$true)]
     [string] $Role,
     [Parameter(Mandatory=$true)]
-    [string] $ConfigPath,
+    [string] $ConfigPath
 
   )
   Process
