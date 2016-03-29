@@ -31,10 +31,12 @@ function Install-AppItems {
         Write-Verbose "Extract $archivePath to $tempPath"
         Expand-RubbleArchive $archivePath $tempPath 
         
-        Write-Verbose "Move $ItemReferencesPath to $tempPath"
-        mv $ItemReferencesPath  "$tempPath\"
+        if(Test-Path $ItemReferencesPath) {
+            Write-Verbose "Move $ItemReferencesPath to $tempPath"
+            mv $ItemReferencesPath  "$tempPath\backup"
+        }
         
-        Write-Verbose "Move $tempPath\appDefaul to $ItemReferencesPath"
+        Write-Verbose "Move $tempPath\app to $ItemReferencesPath"
         mv "$tempPath\app" $ItemReferencesPath
                 
         Set-ScSerializationReference $WebRoot $ConfigPath -SerializationPath $ItemReferencesPath -SerializationTemplateKey "DeploymentSerializationReferenceTemplate"
