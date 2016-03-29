@@ -12,5 +12,6 @@
     <file src="src\**" />
     <file src="packages\**" target="tools" exclude="**\Unic.Bob.Keith\**;**\pester\**" />
     <file src="tools\**" target="tools" />
+    <file src="paket-files\kamsar\Unicorn\doc\PowerShell Remote Scripting\**" target="tools\kamsar\Unicorn\doc\PowerShell Remote Scripting" />
   </files>
 </package>
