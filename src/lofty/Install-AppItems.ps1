@@ -29,7 +29,7 @@ function Install-AppItems {
         mkdir $tempPath
         $archivePath = Resolve-Path ".\app.zip"
         Write-Verbose "Extract $archivePath to $tempPath"
-        Expand-RubbleArchive $archivePath $tempPath 
+        Expand-RubbleArchive $archivePath "$tempPath\app" 
         
         if(Test-Path $ItemReferencesPath) {
             Write-Verbose "Move $ItemReferencesPath to $tempPath"
