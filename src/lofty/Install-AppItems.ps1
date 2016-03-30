@@ -3,7 +3,8 @@
 Install the app items to the Sitecore website.
 
 .DESCRIPTION
-Install the app items to the Sitecore website
+Install the app items to the Sitecore website.
+The items will be taken from the ".\app.zip".
 
 .PARAMETER Url
 The url of the Sitecore website where the items should be installed.

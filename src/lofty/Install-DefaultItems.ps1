@@ -3,18 +3,23 @@
 Install the default items to the Sitecore website.
 
 .DESCRIPTION
-Install the default items to the Sitecore website
+Install the default items to the Sitecore website.
+The items will be taken from the ".\appDefault.zip"
 
 .PARAMETER Url
+The url of the Sitecore website where the items should be installed.
 
 .PARAMETER ItemReferencesPath
-
+The path on the file system to the folder, where the items are located 
+which were installed during the last deployment. 
+Note that this command will copy all installed items to this location when the items were installed 
 
 .PARAMETER TempItemspath
-
+A path on the file system used by the command to put temporary data.
 
 
 .EXAMPLE
+Install-DefaultItems
 
 #>
 function Install-DefaultItems {
