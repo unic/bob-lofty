@@ -5,10 +5,23 @@ Install the app items to the Sitecore website.
 .DESCRIPTION
 Install the app items to the Sitecore website
 
+.PARAMETER Url
+The url of the Sitecore website where the items should be installed.
 
+.PARAMETER ItemReferencesPath
+The path where the items should be placed on the file system.
 
+.PARAMETER TempItemspath
+A path on the file system used by the command to put temporary data.
+
+.PARAMETER ConfigPath
+The path to the folder where to Bob.config is located.
+
+.PARAMETER WebRoot
+The path to the web-root of the Sitecore website.
 
 .EXAMPLE
+Install-AppItems -Url http://local.sitecore.com -ItemReferencesPath D:\items\appItems -TempItemsPath D:\items\temp -ConfigPath D:\packages\Sitecore.Config -WebRoot D:\Webs\sitecore
 
 #>
 function Install-AppItems {
