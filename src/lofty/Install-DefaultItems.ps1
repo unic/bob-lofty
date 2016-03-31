@@ -41,7 +41,7 @@ function Install-DefaultItems {
         Expand-RubbleArchive $archivePath $tempPath 
         
         $updatePackageFile =  "$tempPath\package.update"
-        New-ScSerializationPackage -Source "$tempPath\appDefault" -Target $ItemReferencesPath -OutputFile $updatePackageFile -CollisionMode "Skip"
+        New-ScSerializationPackage -Source $ItemReferencesPath -Target "$tempPath\appDefault" -OutputFile $updatePackageFile -CollisionMode "Skip"
         
         Write-Verbose "Install item package $updatePackageFile to $Url"
         Install-ScSerializationPackage -Path $updatePackageFile -Url $Url
