@@ -4,10 +4,10 @@ Transforms all Web.*.config with the Sitecore web.config.
 
 .DESCRIPTION
 Transforms all Web.*.config of the *.Config NuGet package
-with the Web.config which the provided Web.config.
+with the provided Web.config.
 
 .PARAMETER ConfigPath
-The folder where the *.Config NuGet packge was extracted
+The folder where the *.Config NuGet package was extracted
 
 .PARAMETER WebConfigPath
 The path to the Web.config on which the transforms should be applied.
