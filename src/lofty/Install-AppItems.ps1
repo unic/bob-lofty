@@ -16,7 +16,7 @@ The path where the items should be placed on the file system.
 A path on the file system used by the command to put temporary data.
 
 .PARAMETER ConfigPath
-The path to the folder where to Bob.config is located.
+The path to the folder where the Bob.config is located.
 
 .PARAMETER WebRoot
 The path to the web-root of the Sitecore website.
