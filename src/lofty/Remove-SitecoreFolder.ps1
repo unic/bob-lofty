@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Removes the "/sitecore" folder except the files specified with the PathsToKeep parameter.
+Removes the "/sitecore" folder except for the files specified with the PathsToKeep parameter.
 
 .DESCRIPTION
-Removes the "/sitecore" folder except the files specified with the PathsToKeep parameter.
+Removes the "/sitecore" folder except for the files specified with the PathsToKeep parameter.
 
 .PARAMETER WebRoot
 The path to the WebRoot.
