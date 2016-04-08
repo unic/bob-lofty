@@ -23,14 +23,17 @@ function Restore-UnmanagedFiles
       [Parameter(Mandatory=$true)]
       [string] $WebPath,
       [Parameter(Mandatory=$true)]
-      [string] $TempPath
+      [string] $TempPath,
+      [Parameter(Mandatory=$true)]
+      [string] $ConfigPath
 
     )
     Process
     {
-        $config = Get-ScProjectConfig $WebPath
+        $config = Get-ScProjectConfig $ConfigPath
         if($config.UnmanagedFiles) {
-            Copy-RubbleItem -Path $TempPath -Destination $WebPath -Pattern (Get-RubblePattern $config.UnmanagedFiles) -Verbose
+            $patterns = $config.UnmanagedFiles.Split(';') | % {$_.Trim()} | ? {$_ -ne ""}
+            Copy-RubbleItem -Path $TempPath -Destination $WebPath -Pattern $patterns -Verbose
         }
         else {
             Write-Warning "No UnmanagedFiles are configured."

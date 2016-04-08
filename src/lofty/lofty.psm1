@@ -6,7 +6,8 @@ Export-ModuleMember -Function * -Alias *
 # TODO comment
 function ResolvePath() {
   param($PackageId, $RelativePath)
-  $paths = @("$PSScriptRoot\..\..\packages", "$PSScriptRoot\..\..\paket-files", "$PSScriptRoot\..\tools")
+  $paths = @("$PSScriptRoot\..\..\packages", "$PSScriptRoot\..\..\paket-files", "$PSScriptRoot\..\..\tools", "$PSScriptRoot\..\tools")
+  
   foreach($packPath in $paths) {
     $path = Join-Path $packPath "$PackageId\$RelativePath"
     if((Test-Path $packPath) -and (Test-Path $path)) {
@@ -32,10 +33,12 @@ function ResolveBinPath() {
     Write-Error "No bin path found for $Path"
 }
 
+Import-Module (ResolvePath "UnicornPS" "Unicorn.psm1")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\BobConfig")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Scoop" -RelativePath "tools\Scoop")
 Export-ModuleMember -Function Install-ScSerializationPackage
+
 
 $WarningPreference = "SilentlyContinue"
 Import-Module (ResolveBinPath "iControl\iControlSnapIn.dll")

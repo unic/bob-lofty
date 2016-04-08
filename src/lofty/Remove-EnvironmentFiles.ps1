@@ -29,14 +29,18 @@ function Remove-EnvironmentFiles
     [Parameter(Mandatory=$true)]
     [string] $Environment,
     [Parameter(Mandatory=$true)]
-    [string] $Role
+    [string] $Role,
+    [Parameter(Mandatory=$true)]
+    [string] $ConfigPath
 
   )
   Process
   {
-    $config  = Get-ScProjectConfig $WebRoot
-    $pattern = Get-RubblePattern -Pattern $config.KeepAppConfigIncludes -Replacement @{'$Environment'= $Environment; '$Role' = $Role }
-
+    $roles = $role.Split(";")
+    $config  = Get-ScProjectConfig $ConfigPath
+    
+    $pattern = Get-RubblePattern -Pattern $config.KeepAppConfigIncludes -Replacement @{'$Environment'= $Environment; '$Role' = $Roles }
+    
     Remove-RubbleItem -Folder "$WebRoot\App_Config\Include" -Pattern $pattern
   }
 }

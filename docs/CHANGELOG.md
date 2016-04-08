@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2
+* Removed Keith and Pester from Nuget package
+
 ## 1.2.1
 * updated dependent machines Scoop and Wendy.
 
