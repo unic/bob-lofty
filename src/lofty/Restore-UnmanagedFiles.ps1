@@ -32,7 +32,8 @@ function Restore-UnmanagedFiles
     {
         $config = Get-ScProjectConfig $ConfigPath
         if($config.UnmanagedFiles) {
-            Copy-RubbleItem -Path $TempPath -Destination $WebPath -Pattern (Get-RubblePattern $config.UnmanagedFiles) -Verbose
+            $patterns = $config.UnmanagedFiles.Split(';') | % {$_.Trim()} | ? {$_ -ne ""}
+            Copy-RubbleItem -Path $TempPath -Destination $WebPath -Pattern $patterns -Verbose
         }
         else {
             Write-Warning "No UnmanagedFiles are configured."

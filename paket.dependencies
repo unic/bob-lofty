@@ -3,7 +3,7 @@ source https://nuget.org/api/v2
 nuget pester
 
 source https://teamcity.unic.com/httpAuth/app/nuget/v1/FeedService.svc/ username: "%PAKET_USER%" password: "%PAKET_PASSWORD%"
-nuget Unic.Bob.Config Prerelease
-nuget Unic.Bob.Rubble 1.1.0-unstable0017
+nuget Unic.Bob.Config
+nuget Unic.Bob.Rubble
 nuget Unic.Bob.Keith
-nuget Unic.Bob.Scoop 1.7.0-scmbob-595-0021
+nuget Unic.Bob.Scoop

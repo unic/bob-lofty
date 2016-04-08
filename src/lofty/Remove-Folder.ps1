@@ -12,7 +12,7 @@ The path to the WebRoot.
 A list of files or folders which should not be deleted. They should be separated with a ";"
 
 .EXAMPLE
-Remove-Folder -WebRoot D:\webs\customer-website -PathToFolder $$PathToFolder -PathsToKeep "shell\sitecore.version.xml;shell\Applications\FXM\EmptyLayout.aspx"
+Remove-Folder -WebRoot D:\webs\customer-website -PathToFolder "sitecore" -PathsToKeep "shell\sitecore.version.xml;shell\Applications\FXM\EmptyLayout.aspx"
 
 #>
 function Remove-Folder 
