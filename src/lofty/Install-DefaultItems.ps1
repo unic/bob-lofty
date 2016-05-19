@@ -34,7 +34,7 @@ function Install-DefaultItems {
     )
     Process
     {
-        $Url.TrimEnd('/')
+        $Url = $Url.TrimEnd('/')
         
         $tempPath = "$TempItemspath\$([Guid]::NewGuid())"
         mkdir $tempPath

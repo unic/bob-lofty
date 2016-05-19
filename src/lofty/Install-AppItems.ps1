@@ -39,7 +39,7 @@ function Install-AppItems {
     )
     Process
     {
-        $Url.TrimEnd('/')
+        $Url = $Url.TrimEnd('/')
         
         $tempPath = "$TempItemspath\$([Guid]::NewGuid())"
         mkdir $tempPath
