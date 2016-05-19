@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1
+* Implemented removing trailing slashes in the Url variable
+
+## 2.0
+* Added support for Bob 2.0
+
 ## 1.2.2
 * Removed Keith and Pester from Nuget package
 
