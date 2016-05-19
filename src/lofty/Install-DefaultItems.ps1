@@ -34,6 +34,8 @@ function Install-DefaultItems {
     )
     Process
     {
+        $Url = $Url.TrimEnd('/')
+        
         $tempPath = "$TempItemspath\$([Guid]::NewGuid())"
         mkdir $tempPath
         $archivePath = Resolve-Path ".\appDefault.zip"
@@ -49,7 +51,7 @@ function Install-DefaultItems {
         Write-Verbose "Move $ItemReferencesPath to $tempPath"
         mv $ItemReferencesPath  "$tempPath\"
         
-        Write-Verbose "Move $tempPath\appDefaul to $ItemReferencesPath"
+        Write-Verbose "Move $tempPath\appDefault to $ItemReferencesPath"
         mv "$tempPath\appDefault" $ItemReferencesPath
          
         Write-Verbose "Remove $tempPath"
