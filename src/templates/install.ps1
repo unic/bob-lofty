@@ -32,10 +32,19 @@ $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
 $targetUrl = $config.TargetUrl
 $itemPackages = $config.ItemPackages
+$backupDir = $config.BackupDir
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
 }
+
+if (-not $backupDir) {
+    Write-Error "The backup dir is not set!"
+}
+
+if (-not (Test-Path $backupDir)) {      
+     mkdir $backupDir | Out-Null    
+ }
 
 if ((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped"){
     Write-Output "Stopping IIS app pool $appPoolName"
@@ -48,10 +57,10 @@ while((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped") {
     sleep -Milliseconds 500
 }
 
-
+$
 if(Test-Path $websiteLocation) {
-    Write-Output "Backup website at $websiteLocation"
-    Backup-WebRoot -Path $websiteLocation
+    Write-Output "Backup website at $websiteLocation to $backupDir"
+    Backup-WebRoot -Path $websiteLocation -BackupLocation $backupDir
     $unmanagedBackupLocation = (Get-Item (Backup-UnmanagedFiles -WebPath $websiteLocation -Verbose)).FullName
 
     Write-Output "Purge website location $websiteLocation"

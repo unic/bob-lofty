@@ -90,7 +90,7 @@ function New-OfflineDeploymentPackage
             mkdir items
             cp "$ItemsPath\*" .\items -Recurse
         }
-
+        
         $doc = New-Object System.XML.XMLDocument
         $docRoot = $doc.CreateElement("configuration")
         $doc.AppendChild($docRoot) | Out-Null
@@ -100,7 +100,9 @@ function New-OfflineDeploymentPackage
             "WebsiteLocation" = $TargetWebsitePath;
             "TargetUrl" = $TargetUrl;
             "ItemPackages" = $ItemPackages;
+            "BackupDir" = "C:\Backup";
         }
+        
         foreach($key in $config.Keys) {
             $element = $doc.CreateElement($key)
             $element.InnerText = $config[$key]
