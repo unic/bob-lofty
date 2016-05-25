@@ -36,7 +36,7 @@ The path to the folder containing all item packages to install.
 .PARAMETER ConfigsPath
 The path to the folder containing the configuration files.
 
-.PARAMETER UnmanagedFilesDirectory
+.PARAMETER UnmanagedFilesPath
 The path to the folder containing the unmanaged files.
 
 .EXAMPLE
@@ -63,7 +63,7 @@ function New-OfflineDeploymentPackage
         [string] $TargetUrl,
         [string] $ItemsPath,
         [string] $ConfigsPath,
-        [string] $UnmanagedFilesDirectory
+        [string] $UnmanagedFilesPath
     )
     Process
     {
@@ -106,7 +106,7 @@ function New-OfflineDeploymentPackage
             "ApplicationPoolName" = $TargetAppPoolName;
             "WebsiteLocation" = $TargetWebsitePath;
             "TargetUrl" = $TargetUrl;
-            "UnmanagedFilesDirectory" = $UnmanagedFilesDirectory;
+            "UnmanagedFilesPath" = $UnmanagedFilesPath;
         }
         foreach($key in $config.Keys) {
             $element = $doc.CreateElement($key)

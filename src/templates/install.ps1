@@ -31,7 +31,7 @@ Import-Module WebAdministration
 $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
 $targetUrl = $config.TargetUrl
-$unmanagedFilesDirectory = $config.UnmanagedFilesDirectory
+$UnmanagedFilesPath = $config.UnmanagedFilesPath
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
@@ -65,11 +65,11 @@ Write-Output "Copy content of $scriptPath\website to  $websiteLocation"
 cp  "$scriptPath\website\*" "$websiteLocation\" -Recurse
 
 
-Write-Output "Restore unmanaged files from $unmanagedFilesDirectory to $websiteLocation"
+Write-Output "Restore unmanaged files from $UnmanagedFilesPath to $websiteLocation"
 
-if($unmanagedFilesDirectory) {
+if($UnmanagedFilesPath) {
     
-    cp  "$unmanagedFilesDirectory\*" "$websiteLocation\" -Recurse
+    cp  "$UnmanagedFilesPath\*" "$websiteLocation\" -Recurse
     
 }
 
