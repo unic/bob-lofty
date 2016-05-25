@@ -90,7 +90,7 @@ function New-OfflineDeploymentPackage
 
         if($ItemsPath -and (Test-Path $ItemsPath)) {
             mkdir items
-            cp "$ItemsPath\*" .\items -Recurse
+            cp "$ItemsPath\*" . -Recurse
         }
         
         if($ConfigsPath -and (Test-Path $ConfigsPath)) {
