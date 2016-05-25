@@ -36,6 +36,9 @@ The path to the folder containing all item packages to install.
 .PARAMETER ConfigsPath
 The path to the folder containing the configuration files.
 
+.PARAMETER UnmanagedFilesDirectory
+The path to the folder containing the unmanaged files.
+
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
     -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items"
@@ -59,7 +62,8 @@ function New-OfflineDeploymentPackage
         [string] $TargetDirectory,
         [string] $TargetUrl,
         [string] $ItemsPath,
-        [string] $ConfigsPath
+        [string] $ConfigsPath,
+        [string] $UnmanagedFilesDirectory
     )
     Process
     {
