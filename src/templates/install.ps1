@@ -69,7 +69,7 @@ Write-Output "Restore unmanaged files from $UnmanagedFilesPath to $websiteLocati
 
 if($UnmanagedFilesPath) {
     
-    cp  "$UnmanagedFilesPath\*" "$websiteLocation\" -Recurse
+    cp  "$UnmanagedFilesPath\*" "$websiteLocation\" -Recurse -Force
     
 }
 
@@ -77,8 +77,8 @@ Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
 $configFolder = "$scriptPath\configs"
-Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\items\tempAppItems" $configFolder $websiteLocation 
-Install-DefaultItems $targetUrl "$scriptPath\items" "$scriptPath\items\tempDefaultItems" 
+Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
+Install-DefaultItems $targetUrl "$scriptPath\items" "$scriptPath\tempDefaultItems" 
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 
