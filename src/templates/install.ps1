@@ -78,7 +78,7 @@ Start-WebAppPool $appPoolName
 
 $configFolder = "$scriptPath\configs"
 Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
-Install-DefaultItems $targetUrl "$scriptPath\items" "$scriptPath\tempDefaultItems" 
+Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 
