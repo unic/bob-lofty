@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2
+* Added support for offline deployments
+
 ## 2.1
 * Implemented removing trailing slashes in the Url variable
 
