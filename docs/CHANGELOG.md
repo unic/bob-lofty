@@ -2,12 +2,10 @@
 
 ## 2.3
 * Updated the theme
+* Dehardcoded the backup directory
 
 ## 2.2
 * Added support for offline deployments
-
-## 2.1.1
-* Dehardcoded the backup directory
 
 ## 2.1
 * Implemented removing trailing slashes in the Url variable
