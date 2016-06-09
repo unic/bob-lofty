@@ -23,7 +23,7 @@ function Clear-Backup
 {
     [CmdletBinding()]
     Param(
-        [string] $BackupLocation = "C:\Backup\OctopusDeploy",
+        [string] $BackupLocation = "C:\Backup",
         [int] $MaximumBackupDays = 7,
         [int] $MinimumBackups = 5
     )
