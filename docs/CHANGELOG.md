@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.1
+* Dehardcoded the backup directory
+
 ## 1.2.2
 * Removed Keith and Pester from Nuget package
 
