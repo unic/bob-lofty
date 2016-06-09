@@ -39,6 +39,9 @@ The path to the folder containing the configuration files.
 .PARAMETER UnmanagedFilesPath
 The path to the folder containing the unmanaged files.
 
+.PARAMETER BackupDir
+The path to the folder where the files will be backed up before deployment.
+
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
     -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items"
@@ -63,7 +66,8 @@ function New-OfflineDeploymentPackage
         [string] $TargetUrl,
         [string] $ItemsPath,
         [string] $ConfigsPath,
-        [string] $UnmanagedFilesPath
+        [string] $UnmanagedFilesPath,
+        [string] $BackupDir = "C:\Backup"
     )
     Process
     {
@@ -107,7 +111,7 @@ function New-OfflineDeploymentPackage
             "WebsiteLocation" = $TargetWebsitePath;
             "TargetUrl" = $TargetUrl;
             "UnmanagedFilesPath" = $UnmanagedFilesPath;
-            "BackupDir" = "C:\Backup";
+            "BackupDir" = $BackupDir;
         }
         
         foreach($key in $config.Keys) {
