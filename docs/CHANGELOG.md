@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.3
+* Updated the theme
+
 ## 2.2
 * Added support for offline deployments
 
