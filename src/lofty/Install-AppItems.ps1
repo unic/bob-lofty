@@ -39,6 +39,8 @@ function Install-AppItems {
     )
     Process
     {
+        $Url = $Url.TrimEnd('/')
+        
         $tempPath = "$TempItemspath\$([Guid]::NewGuid())"
         mkdir $tempPath
         $archivePath = Resolve-Path ".\app.zip"

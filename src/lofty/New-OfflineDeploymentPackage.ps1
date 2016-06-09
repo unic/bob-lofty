@@ -33,14 +33,15 @@ This will be used on the author system to install the items.
 .PARAMETER ItemsPath
 The path to the folder containing all item packages to install.
 
-.PARAMETER ItemPackages
-A list of file names of item packages which must be in the `ItemsPath`.
-All file names must be separated by a `;`.
+.PARAMETER ConfigsPath
+The path to the folder containing the configuration files.
+
+.PARAMETER UnmanagedFilesPath
+The path to the folder containing the unmanaged files.
 
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
-    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items" `
-    -ItemPackages items.update
+    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items"
 
 #>
 function New-OfflineDeploymentPackage
@@ -61,7 +62,8 @@ function New-OfflineDeploymentPackage
         [string] $TargetDirectory,
         [string] $TargetUrl,
         [string] $ItemsPath,
-        [string] $ItemPackages
+        [string] $ConfigsPath,
+        [string] $UnmanagedFilesPath
     )
     Process
     {
@@ -88,7 +90,12 @@ function New-OfflineDeploymentPackage
 
         if($ItemsPath -and (Test-Path $ItemsPath)) {
             mkdir items
-            cp "$ItemsPath\*" .\items -Recurse
+            cp "$ItemsPath\*" . -Recurse
+        }
+        
+        if($ConfigsPath -and (Test-Path $ConfigsPath)) {
+            mkdir configs
+            cp "$ConfigsPath\*" .\configs -Recurse
         }
         
         $doc = New-Object System.XML.XMLDocument
@@ -99,7 +106,7 @@ function New-OfflineDeploymentPackage
             "ApplicationPoolName" = $TargetAppPoolName;
             "WebsiteLocation" = $TargetWebsitePath;
             "TargetUrl" = $TargetUrl;
-            "ItemPackages" = $ItemPackages;
+            "UnmanagedFilesPath" = $UnmanagedFilesPath;
             "BackupDir" = "C:\Backup";
         }
         

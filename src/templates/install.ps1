@@ -31,7 +31,7 @@ Import-Module WebAdministration
 $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
 $targetUrl = $config.TargetUrl
-$itemPackages = $config.ItemPackages
+$UnmanagedFilesPath = $config.UnmanagedFilesPath
 $backupDir = $config.BackupDir
 
 if(-not $websiteLocation) {
@@ -61,7 +61,6 @@ $
 if(Test-Path $websiteLocation) {
     Write-Output "Backup website at $websiteLocation to $backupDir"
     Backup-WebRoot -Path $websiteLocation -BackupLocation $backupDir
-    $unmanagedBackupLocation = (Get-Item (Backup-UnmanagedFiles -WebPath $websiteLocation -Verbose)).FullName
 
     Write-Output "Purge website location $websiteLocation"
     rm "$websiteLocation\*" -Recurse -Force
@@ -75,25 +74,20 @@ Write-Output "Copy content of $scriptPath\website to  $websiteLocation"
 cp  "$scriptPath\website\*" "$websiteLocation\" -Recurse
 
 
-Write-Output "Restore unmanaged files from $unmanagedBackupLocation to $websiteLocation"
-if($unmanagedBackupLocation) {
-    Restore-UnmanagedFiles -WebPath $websiteLocation -TempPath $unmanagedBackupLocation
+Write-Output "Restore unmanaged files from $UnmanagedFilesPath to $websiteLocation"
+
+if($UnmanagedFilesPath) {
+    
+    cp  "$UnmanagedFilesPath\*" "$websiteLocation\" -Recurse -Force
+    
 }
 
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-$packages = $itemPackages.Split(";")
-
-foreach($package in $packages) {
-    $package = $package.Trim()
-    $package = "$scriptPath\items\$package"
-
-    if(Test-Path $package) {
-        Write-Output "Installing items package $package to $targetUrl. This will take a moment..."
-        Install-ScSerializationPackage -Path $package -Url $targetUrl
-    }
-}
+$configFolder = "$scriptPath\configs"
+Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
+Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 
