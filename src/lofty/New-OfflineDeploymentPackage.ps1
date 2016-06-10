@@ -67,7 +67,7 @@ function New-OfflineDeploymentPackage
         [string] $ItemsPath,
         [string] $ConfigsPath,
         [string] $UnmanagedFilesPath,
-        [switch] $IsDelivery = $False
+        [string] $IsDelivery = "False"
     )
     Process
     {
@@ -113,7 +113,7 @@ function New-OfflineDeploymentPackage
             "UnmanagedFilesPath" = $UnmanagedFilesPath;
             "IsDelivery" = $IsDelivery;
         }
-        
+
         foreach($key in $config.Keys) {
             $element = $doc.CreateElement($key)
             $element.InnerText = $config[$key]

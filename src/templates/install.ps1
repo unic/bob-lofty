@@ -77,7 +77,7 @@ if($UnmanagedFilesPath) {
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-if (-not $IsDelivery)
+if (-not ($IsDelivery.ToLower() -eq "true"))
 {
     $configFolder = "$scriptPath\configs"
     Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
