@@ -39,6 +39,9 @@ The path to the folder containing the configuration files.
 .PARAMETER UnmanagedFilesPath
 The path to the folder containing the unmanaged files.
 
+.PARAMETER BackupDir
+The path to the folder where the files will be backed up before deployment.
+
 .PARAMETER IsDelivery
 Indicates whether the package will be installed on a delivery environment. It is used to decide whether the items should be installed.
 
@@ -67,6 +70,7 @@ function New-OfflineDeploymentPackage
         [string] $ItemsPath,
         [string] $ConfigsPath,
         [string] $UnmanagedFilesPath,
+        [string] $BackupDir = "C:\Backup",
         [string] $IsDelivery = "False"
     )
     Process
@@ -101,7 +105,7 @@ function New-OfflineDeploymentPackage
             mkdir configs
             cp "$ConfigsPath\*" .\configs -Recurse
         }
-
+        
         $doc = New-Object System.XML.XMLDocument
         $docRoot = $doc.CreateElement("configuration")
         $doc.AppendChild($docRoot) | Out-Null
@@ -111,6 +115,7 @@ function New-OfflineDeploymentPackage
             "WebsiteLocation" = $TargetWebsitePath;
             "TargetUrl" = $TargetUrl;
             "UnmanagedFilesPath" = $UnmanagedFilesPath;
+            "BackupDir" = $BackupDir;
             "IsDelivery" = $IsDelivery;
         }
 

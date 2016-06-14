@@ -25,7 +25,7 @@ function Backup-WebRoot
     Param(
       [Parameter(Mandatory=$true)]
       [string] $Path,
-      [string] $BackupLocation = "D:\Backup\OctopusDeploy",
+      [string] $BackupLocation = "C:\Backup",
       [string] $BackupFileName
     )
     Process
