@@ -1,9 +1,11 @@
 # Changelog
 
 ## 2.3
-* Updated the theme
-* Dehardcoded the backup directory
-* Added a possibility of not installing items on delivery environments
+* fix filename generation in case of multiple roles (replace `;` with `_`)
+* improve path-length usage during offline package generation by switching from GUID to HashCode of GUID for temp folders
+* Updated the theme & GitBook
+* Dehardcoded the backup directory (it now defaults to c:\Backup
+* fixed unwanted item installation on delivery servers by adding a property called `isDelivery` (defaults to `false`) to disable item installation  
 
 ## 2.2
 * Added support for offline deployments
