@@ -128,7 +128,11 @@ function New-OfflineDeploymentPackage
         $configPath = "$($pwd.Path)\config.xml"
         $doc.Save($configPath)
         Write-Host "Wrote config file at $configPath."
-
+        
+        # Sanitize package name: the "multiple role support" feature adds semicolons
+        $PackageName = $PackageName.Replace(";", "_")
+        Write-Host "Using \"$PackageName\" as package name."
+        
         $packagesPath = (Resolve-Path .. ).Path + "\$PackageName.zip"
         Write-Host "Pack content of $tempWorkingDirectory to $packagesPath"
         Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
