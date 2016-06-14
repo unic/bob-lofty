@@ -136,9 +136,9 @@ function New-OfflineDeploymentPackage
         $doc.Save($configPath)
         Write-Host "Wrote config file at $configPath."
 
-        $packagesPath = (Resolve-Path .. ).Path + "\$PackageName.zip"
+        $packagesPath = $WorkingDirectory + "\$PackageName.zip"
         Write-Host "Pack content of $tempWorkingDirectory to $packagesPath"
-        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
+        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath -RelativeToPath $tempWorkingDirectory
         if(-not (Test-Path $TargetDirectory)) {
             mkdir $TargetDirectory
         }
@@ -148,7 +148,7 @@ function New-OfflineDeploymentPackage
 
         Pop-Location
 
-        rm $tempDirectory -Recurse
+        rm $tempWorkingDirectory -Recurse
 
 
     }
