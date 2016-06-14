@@ -32,6 +32,7 @@ $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
 $targetUrl = $config.TargetUrl
 $UnmanagedFilesPath = $config.UnmanagedFilesPath
+$IsDelivery = $config.IsDelivery
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
@@ -76,9 +77,12 @@ if($UnmanagedFilesPath) {
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-$configFolder = "$scriptPath\configs"
-Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
-Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
+if (-not ($IsDelivery.ToLower() -eq "true"))
+{
+    $configFolder = "$scriptPath\configs"
+    Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
+    Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
+}
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 

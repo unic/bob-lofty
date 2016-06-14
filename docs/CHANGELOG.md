@@ -2,6 +2,7 @@
 
 ## 2.3
 * Updated the theme
+* Added a possibility of not installing items on delivery environments
 
 ## 2.2
 * Added support for offline deployments
