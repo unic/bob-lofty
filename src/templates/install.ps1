@@ -42,10 +42,6 @@ if (-not $backupDir) {
     Write-Error "The backup dir is not set!"
 }
 
-if (-not (Test-Path $backupDir)) {      
-     mkdir $backupDir | Out-Null    
- }
-
 if ((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped"){
     Write-Output "Stopping IIS app pool $appPoolName"
     (ls "IIS:\AppPools\$appPoolName\WorkerProcesses") | % {Get-Process -Id $_.processId | Stop-Process -Force}
@@ -57,7 +53,6 @@ while((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped") {
     sleep -Milliseconds 500
 }
 
-$
 if(Test-Path $websiteLocation) {
     Write-Output "Backup website at $websiteLocation to $backupDir"
     Backup-WebRoot -Path $websiteLocation -BackupLocation $backupDir
