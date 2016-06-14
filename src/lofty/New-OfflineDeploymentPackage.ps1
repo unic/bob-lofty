@@ -42,6 +42,9 @@ The path to the folder containing the unmanaged files.
 .PARAMETER BackupDir
 The path to the folder where the files will be backed up before deployment.
 
+.PARAMETER IsDelivery
+Indicates whether the package will be installed on a delivery environment. It is used to decide whether the items should be installed.
+
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
     -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items"
@@ -67,7 +70,8 @@ function New-OfflineDeploymentPackage
         [string] $ItemsPath,
         [string] $ConfigsPath,
         [string] $UnmanagedFilesPath,
-        [string] $BackupDir = "C:\Backup"
+        [string] $BackupDir = "C:\Backup",
+        [string] $IsDelivery = "False"
     )
     Process
     {
@@ -112,8 +116,9 @@ function New-OfflineDeploymentPackage
             "TargetUrl" = $TargetUrl;
             "UnmanagedFilesPath" = $UnmanagedFilesPath;
             "BackupDir" = $BackupDir;
+            "IsDelivery" = $IsDelivery;
         }
-        
+
         foreach($key in $config.Keys) {
             $element = $doc.CreateElement($key)
             $element.InnerText = $config[$key]
