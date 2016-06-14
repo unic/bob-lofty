@@ -75,7 +75,16 @@ function New-OfflineDeploymentPackage
     )
     Process
     {
-        $tempDirectory = "$WorkingDirectory\" + [Guid]::NewGuid()
+        $tempDirectory = ""
+        while ($tempDirectory -eq "")
+        {
+            $testPath = "$WorkingDirectory\" + [Guid]::NewGuid().GetHashCode().toString("x")
+            if(-not (Test-Path $testPath)) {
+                mkdir $testPath
+                $tempDirectory = $testPath
+            }
+        }
+        
         $tempWorkingDirectory = "$tempDirectory\$PackageName"
         mkdir $tempWorkingDirectory
         Push-Location $tempWorkingDirectory
