@@ -75,18 +75,16 @@ function New-OfflineDeploymentPackage
     )
     Process
     {
-        $tempDirectory = ""
-        while ($tempDirectory -eq "")
+        $tempWorkingDirectory = ""
+        while ($tempWorkingDirectory -eq "")
         {
             $testPath = "$WorkingDirectory\" + [Guid]::NewGuid().GetHashCode().toString("x")
             if(-not (Test-Path $testPath)) {
                 mkdir $testPath
-                $tempDirectory = $testPath
+                $tempWorkingDirectory = $testPath
             }
         }
         
-        $tempWorkingDirectory = "$tempDirectory\$PackageName"
-        mkdir $tempWorkingDirectory
         Push-Location $tempWorkingDirectory
 
         cp "$PSScriptRoot\..\templates\*" .
