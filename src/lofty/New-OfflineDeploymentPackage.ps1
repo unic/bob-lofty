@@ -149,7 +149,5 @@ function New-OfflineDeploymentPackage
         Pop-Location
 
         rm $tempWorkingDirectory -Recurse
-
-
     }
 }
