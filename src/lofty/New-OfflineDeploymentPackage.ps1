@@ -75,9 +75,16 @@ function New-OfflineDeploymentPackage
     )
     Process
     {
-        $tempDirectory = "$WorkingDirectory\" + [Guid]::NewGuid()
-        $tempWorkingDirectory = "$tempDirectory\$PackageName"
-        mkdir $tempWorkingDirectory
+        $tempWorkingDirectory = ""
+        while ($tempWorkingDirectory -eq "")
+        {
+            $testPath = "$WorkingDirectory\" + [Guid]::NewGuid().GetHashCode().toString("x")
+            if(-not (Test-Path $testPath)) {
+                mkdir $testPath
+                $tempWorkingDirectory = $testPath
+            }
+        }
+        
         Push-Location $tempWorkingDirectory
 
         cp "$PSScriptRoot\..\templates\*" .
@@ -133,9 +140,11 @@ function New-OfflineDeploymentPackage
         $PackageName = $PackageName.Replace(";", "_")
         Write-Host "Using \"$PackageName\" as package name."
         
-        $packagesPath = (Resolve-Path .. ).Path + "\$PackageName.zip"
+        $packagesPath = $WorkingDirectory + "\$PackageName.zip"
+
         Write-Host "Pack content of $tempWorkingDirectory to $packagesPath"
-        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
+        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath -RelativeToPath $tempWorkingDirectory
+        
         if(-not (Test-Path $TargetDirectory)) {
             mkdir $TargetDirectory
         }
@@ -145,8 +154,6 @@ function New-OfflineDeploymentPackage
 
         Pop-Location
 
-        rm $tempDirectory -Recurse
-
-
+        rm $tempWorkingDirectory -Recurse
     }
 }
