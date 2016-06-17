@@ -10,7 +10,7 @@ file is zip.
 The folder containing all backups.
 
 .EXAMPLE
-Get-Backup D:\Backup\OctopusDeploy
+Get-Backup D:\Backup
 
 #>
 function Get-Backup

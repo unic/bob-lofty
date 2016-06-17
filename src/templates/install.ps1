@@ -32,9 +32,15 @@ $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
 $targetUrl = $config.TargetUrl
 $UnmanagedFilesPath = $config.UnmanagedFilesPath
+$backupDir = $config.BackupDir
+$IsDelivery = $config.IsDelivery
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
+}
+
+if (-not $backupDir) {
+    Write-Error "The backup dir is not set!"
 }
 
 if ((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped"){
@@ -48,10 +54,9 @@ while((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped") {
     sleep -Milliseconds 500
 }
 
-
 if(Test-Path $websiteLocation) {
-    Write-Output "Backup website at $websiteLocation"
-    Backup-WebRoot -Path $websiteLocation
+    Write-Output "Backup website at $websiteLocation to $backupDir"
+    Backup-WebRoot -Path $websiteLocation -BackupLocation $backupDir
 
     Write-Output "Purge website location $websiteLocation"
     rm "$websiteLocation\*" -Recurse -Force
@@ -76,9 +81,12 @@ if($UnmanagedFilesPath) {
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-$configFolder = "$scriptPath\configs"
-Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
-Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
+if (-not ($IsDelivery.ToLower() -eq "true"))
+{
+    $configFolder = "$scriptPath\configs"
+    Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
+    Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
+}
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
 

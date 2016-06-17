@@ -39,6 +39,12 @@ The path to the folder containing the configuration files.
 .PARAMETER UnmanagedFilesPath
 The path to the folder containing the unmanaged files.
 
+.PARAMETER BackupDir
+The path to the folder where the files will be backed up before deployment.
+
+.PARAMETER IsDelivery
+Indicates whether the package will be installed on a delivery environment. It is used to decide whether the items should be installed.
+
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
     -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items"
@@ -63,13 +69,22 @@ function New-OfflineDeploymentPackage
         [string] $TargetUrl,
         [string] $ItemsPath,
         [string] $ConfigsPath,
-        [string] $UnmanagedFilesPath
+        [string] $UnmanagedFilesPath,
+        [string] $BackupDir = "C:\Backup",
+        [string] $IsDelivery = "False"
     )
     Process
     {
-        $tempDirectory = "$WorkingDirectory\" + [Guid]::NewGuid()
-        $tempWorkingDirectory = "$tempDirectory\$PackageName"
-        mkdir $tempWorkingDirectory
+        $tempWorkingDirectory = ""
+        while ($tempWorkingDirectory -eq "")
+        {
+            $testPath = "$WorkingDirectory\" + [Guid]::NewGuid().GetHashCode().toString("x")
+            if(-not (Test-Path $testPath)) {
+                mkdir $testPath
+                $tempWorkingDirectory = $testPath
+            }
+        }
+        
         Push-Location $tempWorkingDirectory
 
         cp "$PSScriptRoot\..\templates\*" .
@@ -97,7 +112,7 @@ function New-OfflineDeploymentPackage
             mkdir configs
             cp "$ConfigsPath\*" .\configs -Recurse
         }
-
+        
         $doc = New-Object System.XML.XMLDocument
         $docRoot = $doc.CreateElement("configuration")
         $doc.AppendChild($docRoot) | Out-Null
@@ -107,7 +122,10 @@ function New-OfflineDeploymentPackage
             "WebsiteLocation" = $TargetWebsitePath;
             "TargetUrl" = $TargetUrl;
             "UnmanagedFilesPath" = $UnmanagedFilesPath;
+            "BackupDir" = $BackupDir;
+            "IsDelivery" = $IsDelivery;
         }
+
         foreach($key in $config.Keys) {
             $element = $doc.CreateElement($key)
             $element.InnerText = $config[$key]
@@ -117,10 +135,16 @@ function New-OfflineDeploymentPackage
         $configPath = "$($pwd.Path)\config.xml"
         $doc.Save($configPath)
         Write-Host "Wrote config file at $configPath."
+        
+        # Sanitize package name: the "multiple role support" feature adds semicolons
+        $PackageName = $PackageName.Replace(";", "_")
+        Write-Host "Using \"$PackageName\" as package name."
+        
+        $packagesPath = $WorkingDirectory + "\$PackageName.zip"
 
-        $packagesPath = (Resolve-Path .. ).Path + "\$PackageName.zip"
         Write-Host "Pack content of $tempWorkingDirectory to $packagesPath"
-        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath
+        Add-RubbleArchiveFile -Path $tempWorkingDirectory -ArchivePath $packagesPath -RelativeToPath $tempWorkingDirectory
+        
         if(-not (Test-Path $TargetDirectory)) {
             mkdir $TargetDirectory
         }
@@ -130,8 +154,6 @@ function New-OfflineDeploymentPackage
 
         Pop-Location
 
-        rm $tempDirectory -Recurse
-
-
+        rm $tempWorkingDirectory -Recurse
     }
 }
