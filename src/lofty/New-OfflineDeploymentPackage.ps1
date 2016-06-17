@@ -26,7 +26,7 @@ and do its work.
 The folder where the package will be put at the end of package generation
 process.
 
-.PARAMETER TargetUrl
+.PARAMETER Url
 The url of the Sitecore website on the target system.
 This will be used on the author system to install the items.
 
@@ -36,7 +36,7 @@ The path to the folder containing all item packages to install.
 .PARAMETER ConfigsPath
 The path to the folder containing the configuration files.
 
-.PARAMETER UnmanagedFilesPath
+.PARAMETER BlueprintFolderPath
 The path to the folder containing the unmanaged files.
 
 .PARAMETER BackupDir
@@ -47,7 +47,7 @@ Indicates whether the package will be installed on a delivery environment. It is
 
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
-    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -TargetUrl http://author.customer.com  -ItemsPath "D:\items"
+    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -Url http://author.customer.com  -ItemsPath "D:\items"
 
 #>
 function New-OfflineDeploymentPackage
@@ -66,10 +66,10 @@ function New-OfflineDeploymentPackage
         [string] $WorkingDirectory,
         [Parameter(Mandatory=$true)]
         [string] $TargetDirectory,
-        [string] $TargetUrl,
+        [string] $Url,
         [string] $ItemsPath,
         [string] $ConfigsPath,
-        [string] $UnmanagedFilesPath,
+        [string] $BlueprintFolderPath,
         [string] $BackupDir = "C:\Backup",
         [string] $IsDelivery = "False"
     )
@@ -120,8 +120,8 @@ function New-OfflineDeploymentPackage
         $config = @{
             "ApplicationPoolName" = $TargetAppPoolName;
             "WebsiteLocation" = $TargetWebsitePath;
-            "TargetUrl" = $TargetUrl;
-            "UnmanagedFilesPath" = $UnmanagedFilesPath;
+            "Url" = $Url;
+            "BlueprintFolderPath" = $BlueprintFolderPath;
             "BackupDir" = $BackupDir;
             "IsDelivery" = $IsDelivery;
         }
