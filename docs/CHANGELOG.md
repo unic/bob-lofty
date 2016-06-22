@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4
+* Unified the naming. The `TargetUrl` is `Url` and the `UnmanagedFilesPath` is `BlueprintFolderPath` now
+
 ## 2.3
 * Fix filename generation in case of multiple roles (replace `;` with `_`)
 * Improve path-length usage during offline package generation by switching from GUID to HashCode of GUID for temp folders

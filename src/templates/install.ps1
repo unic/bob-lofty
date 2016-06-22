@@ -30,10 +30,10 @@ Import-Module WebAdministration
 
 $appPoolName = $config.ApplicationPoolName
 $websiteLocation = $config.WebsiteLocation
-$targetUrl = $config.TargetUrl
-$UnmanagedFilesPath = $config.UnmanagedFilesPath
+$url = $config.Url
+$blueprintFolderPath = $config.BlueprintFolderPath
 $backupDir = $config.BackupDir
-$IsDelivery = $config.IsDelivery
+$isDelivery = $config.IsDelivery
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
@@ -70,22 +70,22 @@ Write-Output "Copy content of $scriptPath\website to  $websiteLocation"
 cp  "$scriptPath\website\*" "$websiteLocation\" -Recurse
 
 
-Write-Output "Restore unmanaged files from $UnmanagedFilesPath to $websiteLocation"
+Write-Output "Restore unmanaged files from $blueprintFolderPath to $websiteLocation"
 
-if($UnmanagedFilesPath) {
+if($blueprintFolderPath) {
     
-    cp  "$UnmanagedFilesPath\*" "$websiteLocation\" -Recurse -Force
+    cp  "$blueprintFolderPath\*" "$websiteLocation\" -Recurse -Force
     
 }
 
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-if (-not ($IsDelivery.ToLower() -eq "true"))
+if (-not ($isDelivery.ToLower() -eq "true"))
 {
     $configFolder = "$scriptPath\configs"
-    Install-AppItems $targetUrl "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
-    Install-DefaultItems $targetUrl "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
+    Install-AppItems $url "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation 
+    Install-DefaultItems $url "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" 
 }
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
