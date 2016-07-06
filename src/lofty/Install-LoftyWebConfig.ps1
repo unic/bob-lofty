@@ -39,6 +39,6 @@ function Install-LoftyWebConfig
     {
         $folders = ls $ConfigPath | where {$_.PSIsContainer } | % {$_.FullName}
         
-        Install-WebConfigByFolders $folders $WebConfigPath $Environment $role
+        Install-WebConfigByFolders $folders $WebConfigPath $Environment $role.Split(";")
     }
 }
