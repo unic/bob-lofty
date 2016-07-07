@@ -63,6 +63,8 @@ function Install-AppItems {
             Write-Error "You must add the UnicornSharedSecret config key to the Bob.config"
         }
         
+        # Ignore SSL check
+        [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
         Sync-Unicorn "$Url/Unicorn.aspx" $sharedSecret  @()
         
         Write-Verbose "Remove $tempPath"
