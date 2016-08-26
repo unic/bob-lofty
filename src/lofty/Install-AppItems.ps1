@@ -68,6 +68,6 @@ function Install-AppItems {
         Sync-Unicorn "$Url/Unicorn.aspx" $sharedSecret  @()
         
         Write-Verbose "Remove $tempPath"
-        rm $tempPath -Recurse
+        rm $tempPath -Recurse -Force
     }
 }
