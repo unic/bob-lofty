@@ -55,6 +55,6 @@ function Install-DefaultItems {
         mv "$tempPath\appDefault" $ItemReferencesPath
          
         Write-Verbose "Remove $tempPath"
-        rm $tempPath -Recurse
+        rm $tempPath -Recurse -Force
     }
 }
