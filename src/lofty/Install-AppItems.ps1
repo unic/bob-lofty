@@ -67,7 +67,13 @@ function Install-AppItems {
         [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
         Sync-Unicorn "$Url/Unicorn.aspx" $sharedSecret  @()
         
-        Write-Verbose "Remove $tempPath"
-        rm $tempPath -Recurse
+        try  {
+            Write-Verbose "Remove $tempPath"
+            rm $tempPath -Recurse -Force
+        }
+        catch {
+            Write-Warning "Could not remove $tempPath. Error: $($_.Exception.Message)"
+        }
+        
     }
 }

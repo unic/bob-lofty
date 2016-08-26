@@ -54,7 +54,11 @@ function Install-DefaultItems {
         Write-Verbose "Move $tempPath\appDefault to $ItemReferencesPath"
         mv "$tempPath\appDefault" $ItemReferencesPath
          
-        Write-Verbose "Remove $tempPath"
-        rm $tempPath -Recurse
-    }
+        try  {
+            Write-Verbose "Remove $tempPath"
+            rm $tempPath -Recurse -Force
+        }
+        catch {
+            Write-Warning "Could not remove $tempPath. Error: $($_.Exception.Message)"
+        }    }
 }
