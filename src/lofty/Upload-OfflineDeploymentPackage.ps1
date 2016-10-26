@@ -14,9 +14,6 @@ Name of your repository in Nexus.
 .PARAMETER Group
 Group Id.
 
-.PARAMETER Artifact
-Maven artifact Id.
-
 .PARAMETER Version
 Artifact version.
 
@@ -33,7 +30,7 @@ The username.
 The password.
 
 .EXAMPLE
-Upload-OfflineDeploymentPackage -EndpointUrl "http://nexus.maio.com" -Repository "maven" -Group "com.test" -Artifact "project" -Version "2.4" -Packaging "jar" -PackagePath "C:\Users\majcicam\Desktop\junit-4.12.jar" -Username "test.username" -Password "SecurePassword" 
+Upload-OfflineDeploymentPackage -EndpointUrl "http://nexus.unic.com/accept/post/verb" -Repository "unic-ecs-snapshots" -Group "LLB" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
 
 #>
 function Upload-OfflineDeploymentPackage()
@@ -44,7 +41,6 @@ function Upload-OfflineDeploymentPackage()
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$EndpointUrl,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Repository,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Group,
-        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Artifact,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Version,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Packaging,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$PackagePath,
@@ -53,6 +49,8 @@ function Upload-OfflineDeploymentPackage()
     )
     BEGIN
     {
+        Write-Host "BEGIN"
+
         if (-not (Test-Path $PackagePath))
         {
             $errorMessage = ("Package file {0} missing or unable to read." -f $packagePath)
@@ -61,13 +59,16 @@ function Upload-OfflineDeploymentPackage()
             $PSCmdlet.ThrowTerminatingError($errorRecord)
         }
 
+        Write-Host "Adding Http"
+
         Add-Type -AssemblyName System.Net.Http
     }
     PROCESS
     {
+        Write-Host "Start Process"
+
         $repoContent = CreateStringContent "r" $Repository
         $groupContent = CreateStringContent "g" $Group
-        $artifactContent = CreateStringContent "a" $Artifact
         $versionContent = CreateStringContent "v" $Version
         $packagingContent = CreateStringContent "p" $Packaging
         $streamContent = CreateStreamContent $PackagePath
@@ -75,7 +76,6 @@ function Upload-OfflineDeploymentPackage()
         $content = New-Object -TypeName System.Net.Http.MultipartFormDataContent
         $content.Add($repoContent)
         $content.Add($groupContent)
-        $content.Add($artifactContent)
         $content.Add($versionContent)
         $content.Add($packagingContent)
         $content.Add($streamContent)
@@ -164,7 +164,7 @@ function PostArtifact()
 
     try
     {
-        $response = $httpClient.PostAsync("$EndpointUrl/service/local/artifact/maven/content", $Content).Result
+        $response = $httpClient.PostAsync($EndpointUrl, $Content).Result
 
         if (!$response.IsSuccessStatusCode)
         {
