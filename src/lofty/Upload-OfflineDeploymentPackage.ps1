@@ -30,7 +30,7 @@ The username.
 The password.
 
 .EXAMPLE
-Upload-OfflineDeploymentPackage -EndpointUrl "http://nexus.unic.com/accept/post/verb" -Repository "unic-ecs-snapshots" -Group "LLB" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
+Upload-OfflineDeploymentPackage -EndpointUrl "https://nexus.unic.com/nexus/service/local/artifact/maven/content" -Repository "unic-ecs-snapshots" -Group "LLB" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
 
 #>
 function Upload-OfflineDeploymentPackage()
@@ -49,8 +49,6 @@ function Upload-OfflineDeploymentPackage()
     )
     BEGIN
     {
-        Write-Host "BEGIN"
-
         if (-not (Test-Path $PackagePath))
         {
             $errorMessage = ("Package file {0} missing or unable to read." -f $packagePath)
@@ -58,8 +56,6 @@ function Upload-OfflineDeploymentPackage()
             $errorRecord = New-Object System.Management.Automation.ErrorRecord $exception, 'XLDPkgUpload', ([System.Management.Automation.ErrorCategory]::InvalidArgument), $packagePath
             $PSCmdlet.ThrowTerminatingError($errorRecord)
         }
-
-        Write-Host "Adding Http"
 
         Add-Type -AssemblyName System.Net.Http
     }
