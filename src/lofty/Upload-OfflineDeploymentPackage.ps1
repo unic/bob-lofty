@@ -27,10 +27,10 @@ Packaging type (at ex. jar, war, ear, rar, etc.).
 Full, literal path pointing to your Artifact.
 
 .PARAMETER Username
-The username.
+The username to Nexus.
 
 .PARAMETER Password
-The password.
+The password to Nexus.
 
 .EXAMPLE
 Upload-OfflineDeploymentPackage -EndpointUrl "https://nexus.unic.com/nexus/service/local/artifact/maven/content" -Repository "unic-ecs-releases" -Group "LLB" -Artifact "Release" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
