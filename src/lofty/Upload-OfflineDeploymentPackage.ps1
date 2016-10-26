@@ -33,7 +33,7 @@ The username.
 The password.
 
 .EXAMPLE
-Upload-OfflineDeploymentPackage -EndpointUrl "https://nexus.unic.com/nexus/service/local/artifact/maven/content" -Repository "unic-ecs-releases" -Group "LLB" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
+Upload-OfflineDeploymentPackage -EndpointUrl "https://nexus.unic.com/nexus/service/local/artifact/maven/content" -Repository "unic-ecs-releases" -Group "LLB" -Artifact "Release" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
 
 #>
 function Upload-OfflineDeploymentPackage()
