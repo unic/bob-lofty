@@ -1,3 +1,41 @@
+<#
+.SYNOPSIS
+It lets upload the generated offline package to Nexus. The script is based on the blog post published by Sonatype: http://www.sonatype.org/nexus/2016/04/14/uploading-artifacts-into-nexus-repository-via-powershell/.
+
+.DESCRIPTION
+It lets upload the generated offline package to Nexus. The script is based on the blog post published by Sonatype: http://www.sonatype.org/nexus/2016/04/14/uploading-artifacts-into-nexus-repository-via-powershell/.
+
+.PARAMETER EndpointUrl
+Address of your Nexus server.
+
+.PARAMETER Repository
+Name of your repository in Nexus.
+
+.PARAMETER Group
+Group Id.
+
+.PARAMETER Artifact
+Maven artifact Id.
+
+.PARAMETER Version
+Artifact version.
+
+.PARAMETER Packaging
+Packaging type (at ex. jar, war, ear, rar, etc.).
+
+.PARAMETER PackagePath
+Full, literal path pointing to your Artifact.
+
+.PARAMETER Username
+The username.
+
+.PARAMETER Password
+The password.
+
+.EXAMPLE
+Upload-OfflineDeploymentPackage -EndpointUrl "http://nexus.maio.com" -Repository "maven" -Group "com.test" -Artifact "project" -Version "2.4" -Packaging "jar" -PackagePath "C:\Users\majcicam\Desktop\junit-4.12.jar" -Username "test.username" -Password "SecurePassword" 
+
+#>
 function Upload-OfflineDeploymentPackage()
 {
     [CmdletBinding()]
@@ -10,7 +48,8 @@ function Upload-OfflineDeploymentPackage()
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Version,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Packaging,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$PackagePath,
-        [System.Management.Automation.PSCredential][parameter(Mandatory = $true)]$Credential
+        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Username,
+        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Password
     )
     BEGIN
     {
@@ -40,6 +79,9 @@ function Upload-OfflineDeploymentPackage()
         $content.Add($versionContent)
         $content.Add($packagingContent)
         $content.Add($streamContent)
+
+        $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
+        $Credential = New-Object System.Management.Automation.PSCredential ($Username, $securePassword)
 
         $httpClientHandler = GetHttpClientHandler $Credential
 
