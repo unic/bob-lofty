@@ -14,6 +14,9 @@ Name of your repository in Nexus.
 .PARAMETER Group
 Group Id.
 
+.PARAMETER Artifact
+The artifact name. It is a folder name put between the group and version.
+
 .PARAMETER Version
 Artifact version.
 
@@ -30,7 +33,7 @@ The username.
 The password.
 
 .EXAMPLE
-Upload-OfflineDeploymentPackage -EndpointUrl "https://nexus.unic.com/nexus/service/local/artifact/maven/content" -Repository "unic-ecs-snapshots" -Group "LLB" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
+Upload-OfflineDeploymentPackage -EndpointUrl "https://nexus.unic.com/nexus/service/local/artifact/maven/content" -Repository "unic-ecs-releases" -Group "LLB" -Version "1.0" -Packaging "zip" -PackagePath "D:\MyDeployment.zip" -Username "test.username" -Password "SecurePassword" 
 
 #>
 function Upload-OfflineDeploymentPackage()
@@ -41,6 +44,7 @@ function Upload-OfflineDeploymentPackage()
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$EndpointUrl,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Repository,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Group,
+        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Artifact,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Version,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Packaging,
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$PackagePath,
@@ -61,12 +65,11 @@ function Upload-OfflineDeploymentPackage()
     }
     PROCESS
     {
-        Write-Host "Start Process"
-
         $repoContent = CreateStringContent "r" $Repository
         $groupContent = CreateStringContent "g" $Group
         $versionContent = CreateStringContent "v" $Version
         $packagingContent = CreateStringContent "p" $Packaging
+        $artifactContent = CreateStringContent "a" $Artifact
         $streamContent = CreateStreamContent $PackagePath
 
         $content = New-Object -TypeName System.Net.Http.MultipartFormDataContent
@@ -74,6 +77,7 @@ function Upload-OfflineDeploymentPackage()
         $content.Add($groupContent)
         $content.Add($versionContent)
         $content.Add($packagingContent)
+        $content.Add($artifactContent)
         $content.Add($streamContent)
 
         $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
