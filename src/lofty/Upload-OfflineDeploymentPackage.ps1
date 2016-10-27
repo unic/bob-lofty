@@ -56,42 +56,6 @@ function Upload-OfflineDeploymentPackage()
     }
     PROCESS
     {
-        if (-not (Test-Path $PackagePath))
-        {
-            $errorMessage = ("Package file {0} missing or unable to read." -f $packagePath)
-            $exception =  New-Object System.Exception $errorMessage
-            $errorRecord = New-Object System.Management.Automation.ErrorRecord $exception, 'XLDPkgUpload', ([System.Management.Automation.ErrorCategory]::InvalidArgument), $packagePath
-            $PSCmdlet.ThrowTerminatingError($errorRecord)
-        }
-
-        Add-Type -AssemblyName System.Net.Http
-
-         # Sanitize package name: the "multiple role support" feature adds semicolons
-        $PackagePath = $PackagePath.Replace(";", "_")
-
-        $repoContent = CreateStringContent "r" $Repository
-        $groupContent = CreateStringContent "g" $Group
-        $versionContent = CreateStringContent "v" $Version
-        $packagingContent = CreateStringContent "p" $Packaging
-        $artifactContent = CreateStringContent "a" $Artifact
-        $streamContent = CreateStreamContent $PackagePath
-
-        $content = New-Object -TypeName System.Net.Http.MultipartFormDataContent
-        $content.Add($repoContent)
-        $content.Add($groupContent)
-        $content.Add($versionContent)
-        $content.Add($packagingContent)
-        $content.Add($artifactContent)
-        $content.Add($streamContent)
-
-        $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
-        $Credential = New-Object System.Management.Automation.PSCredential ($Username, $securePassword)
-
-        $httpClientHandler = GetHttpClientHandler $Credential
-
-        return PostArtifact $EndpointUrl $httpClientHandler $content
-
-        
         function CreateStringContent()
         {
             param
@@ -195,6 +159,41 @@ function Upload-OfflineDeploymentPackage()
                 }
             }
         }
+
+        if (-not (Test-Path $PackagePath))
+        {
+            $errorMessage = ("Package file {0} missing or unable to read." -f $packagePath)
+            $exception =  New-Object System.Exception $errorMessage
+            $errorRecord = New-Object System.Management.Automation.ErrorRecord $exception, 'XLDPkgUpload', ([System.Management.Automation.ErrorCategory]::InvalidArgument), $packagePath
+            $PSCmdlet.ThrowTerminatingError($errorRecord)
+        }
+
+        Add-Type -AssemblyName System.Net.Http
+
+         # Sanitize package name: the "multiple role support" feature adds semicolons
+        $PackagePath = $PackagePath.Replace(";", "_")
+
+        $repoContent = CreateStringContent "r" $Repository
+        $groupContent = CreateStringContent "g" $Group
+        $versionContent = CreateStringContent "v" $Version
+        $packagingContent = CreateStringContent "p" $Packaging
+        $artifactContent = CreateStringContent "a" $Artifact
+        $streamContent = CreateStreamContent $PackagePath
+
+        $content = New-Object -TypeName System.Net.Http.MultipartFormDataContent
+        $content.Add($repoContent)
+        $content.Add($groupContent)
+        $content.Add($versionContent)
+        $content.Add($packagingContent)
+        $content.Add($artifactContent)
+        $content.Add($streamContent)
+
+        $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
+        $Credential = New-Object System.Management.Automation.PSCredential ($Username, $securePassword)
+
+        $httpClientHandler = GetHttpClientHandler $Credential
+
+        return PostArtifact $EndpointUrl $httpClientHandler $content
     }
     END { }
 }
