@@ -66,6 +66,9 @@ function Upload-OfflineDeploymentPackage()
 
         Add-Type -AssemblyName System.Net.Http
 
+         # Sanitize package name: the "multiple role support" feature adds semicolons
+        $PackagePath = $PackagePath.Replace(";", "_")
+
         $repoContent = CreateStringContent "r" $Repository
         $groupContent = CreateStringContent "g" $Group
         $versionContent = CreateStringContent "v" $Version
