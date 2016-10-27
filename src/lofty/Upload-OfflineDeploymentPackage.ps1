@@ -52,6 +52,9 @@ function Upload-OfflineDeploymentPackage()
         [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Password
     )
     BEGIN
+    {        
+    }
+    PROCESS
     {
         if (-not (Test-Path $PackagePath))
         {
@@ -62,9 +65,7 @@ function Upload-OfflineDeploymentPackage()
         }
 
         Add-Type -AssemblyName System.Net.Http
-    }
-    PROCESS
-    {
+
         $repoContent = CreateStringContent "r" $Repository
         $groupContent = CreateStringContent "g" $Group
         $versionContent = CreateStringContent "v" $Version
@@ -86,111 +87,111 @@ function Upload-OfflineDeploymentPackage()
         $httpClientHandler = GetHttpClientHandler $Credential
 
         return PostArtifact $EndpointUrl $httpClientHandler $content
+
+        
+        function CreateStringContent()
+        {
+            param
+            (
+                [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Name,
+                [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Value,
+                [string]$FileName,
+                [string]$MediaTypeHeaderValue
+            )
+                $contentDispositionHeaderValue = New-Object -TypeName  System.Net.Http.Headers.ContentDispositionHeaderValue -ArgumentList @("form-data")
+                $contentDispositionHeaderValue.Name = $Name
+
+                if ($FileName)
+                {
+                    $contentDispositionHeaderValue.FileName = $FileName
+                }
+
+                $content = New-Object -TypeName System.Net.Http.StringContent -ArgumentList @($Value)
+                $content.Headers.ContentDisposition = $contentDispositionHeaderValue
+
+                if ($MediaTypeHeaderValue)
+                {
+                    $content.Headers.ContentType = New-Object -TypeName System.Net.Http.Headers.MediaTypeHeaderValue $MediaTypeHeaderValue
+                }
+
+                return $content
+        }
+
+        function CreateStreamContent()
+        {
+            param
+            (
+                [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$PackagePath
+            )
+                $packageFileStream = New-Object -TypeName System.IO.FileStream -ArgumentList @($PackagePath, [System.IO.FileMode]::Open)
+
+                $contentDispositionHeaderValue = New-Object -TypeName  System.Net.Http.Headers.ContentDispositionHeaderValue "form-data"
+                $contentDispositionHeaderValue.Name = "file"
+                $contentDispositionHeaderValue.FileName = Split-Path $packagePath -leaf
+
+                $streamContent = New-Object -TypeName System.Net.Http.StreamContent $packageFileStream
+                $streamContent.Headers.ContentDisposition = $contentDispositionHeaderValue
+                $streamContent.Headers.ContentType = New-Object -TypeName System.Net.Http.Headers.MediaTypeHeaderValue "application/octet-stream"
+
+                return $streamContent
+        }
+
+        function GetHttpClientHandler()
+        {
+            param
+            (
+                [System.Management.Automation.PSCredential][parameter(Mandatory = $true)]$Credential
+            )
+
+            $networkCredential = New-Object -TypeName System.Net.NetworkCredential -ArgumentList @($Credential.UserName, $Credential.Password)
+            $httpClientHandler = New-Object -TypeName System.Net.Http.HttpClientHandler
+            $httpClientHandler.Credentials = $networkCredential
+
+            return $httpClientHandler
+        }
+
+        function PostArtifact()
+        {
+            param
+            (
+                [string][parameter(Mandatory = $true)]$EndpointUrl,
+                [System.Net.Http.HttpClientHandler][parameter(Mandatory = $true)]$Handler,
+                [System.Net.Http.HttpContent][parameter(Mandatory = $true)]$Content
+            )
+
+            $httpClient = New-Object -TypeName System.Net.Http.Httpclient $Handler
+
+            try
+            {
+                $response = $httpClient.PostAsync($EndpointUrl, $Content).Result
+
+                if (!$response.IsSuccessStatusCode)
+                {
+                    $responseBody = $response.Content.ReadAsStringAsync().Result
+                    $errorMessage = "Status code {0}. Reason {1}. Server reported the following message: {2}." -f $response.StatusCode, $response.ReasonPhrase, $responseBody
+
+                    throw [System.Net.Http.HttpRequestException] $errorMessage
+                }
+
+                return $response.Content.ReadAsStringAsync().Result
+            }
+            catch [Exception]
+            {
+                $PSCmdlet.ThrowTerminatingError($_)
+            }
+            finally
+            {
+                if($null -ne $httpClient)
+                {
+                    $httpClient.Dispose()
+                }
+
+                if($null -ne $response)
+                {
+                    $response.Dispose()
+                }
+            }
+        }
     }
     END { }
 }
-
-function CreateStringContent()
-{
-    param
-    (
-        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Name,
-        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$Value,
-        [string]$FileName,
-        [string]$MediaTypeHeaderValue
-    )
-        $contentDispositionHeaderValue = New-Object -TypeName  System.Net.Http.Headers.ContentDispositionHeaderValue -ArgumentList @("form-data")
-        $contentDispositionHeaderValue.Name = $Name
-
-        if ($FileName)
-        {
-            $contentDispositionHeaderValue.FileName = $FileName
-        }
-
-        $content = New-Object -TypeName System.Net.Http.StringContent -ArgumentList @($Value)
-        $content.Headers.ContentDisposition = $contentDispositionHeaderValue
-
-        if ($MediaTypeHeaderValue)
-        {
-            $content.Headers.ContentType = New-Object -TypeName System.Net.Http.Headers.MediaTypeHeaderValue $MediaTypeHeaderValue
-        }
-
-        return $content
-}
-
-function CreateStreamContent()
-{
-    param
-    (
-        [string][parameter(Mandatory = $true)][ValidateNotNullOrEmpty()]$PackagePath
-    )
-        $packageFileStream = New-Object -TypeName System.IO.FileStream -ArgumentList @($PackagePath, [System.IO.FileMode]::Open)
-
-        $contentDispositionHeaderValue = New-Object -TypeName  System.Net.Http.Headers.ContentDispositionHeaderValue "form-data"
-        $contentDispositionHeaderValue.Name = "file"
-        $contentDispositionHeaderValue.FileName = Split-Path $packagePath -leaf
-
-        $streamContent = New-Object -TypeName System.Net.Http.StreamContent $packageFileStream
-        $streamContent.Headers.ContentDisposition = $contentDispositionHeaderValue
-        $streamContent.Headers.ContentType = New-Object -TypeName System.Net.Http.Headers.MediaTypeHeaderValue "application/octet-stream"
-
-        return $streamContent
-}
-
-function GetHttpClientHandler()
-{
-    param
-    (
-        [System.Management.Automation.PSCredential][parameter(Mandatory = $true)]$Credential
-    )
-
-    $networkCredential = New-Object -TypeName System.Net.NetworkCredential -ArgumentList @($Credential.UserName, $Credential.Password)
-    $httpClientHandler = New-Object -TypeName System.Net.Http.HttpClientHandler
-    $httpClientHandler.Credentials = $networkCredential
-
-    return $httpClientHandler
-}
-
-function PostArtifact()
-{
-    param
-    (
-        [string][parameter(Mandatory = $true)]$EndpointUrl,
-        [System.Net.Http.HttpClientHandler][parameter(Mandatory = $true)]$Handler,
-        [System.Net.Http.HttpContent][parameter(Mandatory = $true)]$Content
-    )
-
-    $httpClient = New-Object -TypeName System.Net.Http.Httpclient $Handler
-
-    try
-    {
-        $response = $httpClient.PostAsync($EndpointUrl, $Content).Result
-
-        if (!$response.IsSuccessStatusCode)
-        {
-            $responseBody = $response.Content.ReadAsStringAsync().Result
-            $errorMessage = "Status code {0}. Reason {1}. Server reported the following message: {2}." -f $response.StatusCode, $response.ReasonPhrase, $responseBody
-
-            throw [System.Net.Http.HttpRequestException] $errorMessage
-        }
-
-        return $response.Content.ReadAsStringAsync().Result
-    }
-    catch [Exception]
-    {
-        $PSCmdlet.ThrowTerminatingError($_)
-    }
-    finally
-    {
-        if($null -ne $httpClient)
-        {
-            $httpClient.Dispose()
-        }
-
-        if($null -ne $response)
-        {
-            $response.Dispose()
-        }
-    }
-}
-
