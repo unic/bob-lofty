@@ -84,8 +84,8 @@ Start-WebAppPool $appPoolName
 if (-not ($isDelivery.ToLower() -eq "true"))
 {
     $configFolder = "$scriptPath\configs"
-    Install-AppItems $url "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppZipPath "$scriptPath\app.zip" 
-    Install-DefaultItems $url "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" -AppDefaultPath "$scriptPath\appDefault.zip"
+    Install-AppItems $url "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip" 
+    Install-DefaultItems $url "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" -DefaultItemsZipPath "$scriptPath\appDefault.zip"
 }
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor

@@ -36,7 +36,7 @@ function Install-AppItems {
         [string] $TempItemspath,
         [string] $ConfigPath,
         [string] $WebRoot,
-        [string] $AppZipPath = ".\app.zip"
+        [string] $AppItemsZipPath = ".\app.zip"
     )
     Process
     {
@@ -44,7 +44,7 @@ function Install-AppItems {
         
         $tempPath = "$TempItemspath\$([Guid]::NewGuid())"
         mkdir $tempPath
-        $archivePath = Resolve-Path $AppZipPath
+        $archivePath = Resolve-Path $AppItemsZipPath
         Write-Verbose "Extract $archivePath to $tempPath"
         Expand-RubbleArchive $archivePath "$tempPath\app" 
         
