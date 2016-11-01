@@ -30,7 +30,8 @@ function Install-DefaultItems {
         [Parameter(Mandatory=$true)]
         [string] $ItemReferencesPath,
         [Parameter(Mandatory=$true)]
-        [string] $TempItemspath
+        [string] $TempItemspath,
+        [string] $AppDefaultPath = ".\appDefault.zip"
     )
     Process
     {
@@ -38,7 +39,7 @@ function Install-DefaultItems {
         
         $tempPath = "$TempItemspath\$([Guid]::NewGuid())"
         mkdir $tempPath
-        $archivePath = Resolve-Path ".\appDefault.zip"
+        $archivePath = Resolve-Path $AppDefaultPath
         Write-Verbose "Extract $archivePath to $tempPath"
         Expand-RubbleArchive $archivePath $tempPath 
         
