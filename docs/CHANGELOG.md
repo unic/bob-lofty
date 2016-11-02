@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5
+* Enhanced lofty with the possibility to upload files to Nexus thanks to the `Upload-OfflineDeploymentPackage` method
+
 ## 2.4
 * Unified the naming. The `TargetUrl` is `Url` and the `UnmanagedFilesPath` is `BlueprintFolderPath` now
 
