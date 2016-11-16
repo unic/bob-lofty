@@ -17,6 +17,21 @@ In further steps you can then use the following snippet to use Loftys features.
 
     Import-Module "$($OctopusParameters['Octopus.Action[Lofty].Output.Package.InstallationDirectoryPath'])\Lofty"
 
+
+To integrate Lofty with Nexus and upload the zip file generated during the offline deployment use the following Powershell command. Remember to adjust the parameters to your needs.
+
+    $releaseNumber = $OctopusParameters['Octopus.Release.Number']
+    Upload-OfflineDeploymentPackage `
+    -EndpointUrl $NexusEndpointUrl `
+    -Repository $NexusRepository `
+    -Group $NexusGroup `
+    -Artifact $NexusArtifact `
+    -Version $releaseNumber `
+    -Packaging $NexusPackaging `
+    -PackagePath "$OfflinePackageTargetDirectory\$Environment.$Role.$releaseNumber.zip" `
+    -Username $NexusUsername `
+    -Password $NexusPassword
+
 ## Load balancer integration
 Before using one of the `*-LB*` cmdlet, you need to connect to the load balancer. This can be achieved by running the following command:
 
