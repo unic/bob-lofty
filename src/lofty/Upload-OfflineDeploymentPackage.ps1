@@ -160,6 +160,9 @@ function Upload-OfflineDeploymentPackage()
         # Sanitize package name: the "multiple role support" feature adds semicolons
         $PackagePath = $PackagePath.Replace(";", "_")
 
+        # Sanitize artifact name: the "multiple role support" feature adds semicolons
+        $Artifact = $Artifact.Replace(";", "_")
+
         if (-not (Test-Path $PackagePath))
         {
             $errorMessage = ("Package file {0} missing or unable to read." -f $packagePath)
