@@ -36,7 +36,7 @@ To integrate Lofty with Nexus and upload the zip file generated during the offli
 
 To get the latest package from Nexus with curl use the following statement:
 
-    curl –u [username]:[password] –L https://nexus.unic.com/nexus/service/local/artifact/maven/redirect?r=unic-ecs-releases&g=LLB.Novus&a=Test.author.0.1.1-loftytest0001-11&e=zip&v=LATEST
+    curl –u [username]:[password] –L https://nexus.unic.com/nexus/service/local/artifact/maven/redirect?r=unic-ecs-releases&g=LLB.Novus&a=Test.delivery_delivery-public&e=zip&v=LATEST
 
 where r represents the repository name, g is a group, a is an artifact, e extension and v=LATEST instructs nexus to grab for the latest version. Remember to replace the [username] and [password] with valid credentials.
 
