@@ -18,6 +18,8 @@ In further steps you can then use the following snippet to use Loftys features.
     Import-Module "$($OctopusParameters['Octopus.Action[Lofty].Output.Package.InstallationDirectoryPath'])\Lofty"
 
 
+## Nexus Integration
+
 To integrate Lofty with Nexus and upload the zip file generated during the offline deployment use the following Powershell command. Remember to adjust the parameters to your needs.
 
     $releaseNumber = $OctopusParameters['Octopus.Release.Number']
@@ -31,6 +33,13 @@ To integrate Lofty with Nexus and upload the zip file generated during the offli
     -PackagePath "$OfflinePackageTargetDirectory\$Environment.$Role.$releaseNumber.zip" `
     -Username $NexusUsername `
     -Password $NexusPassword
+
+To get the latest package from Nexus with curl use the following statement:
+
+    curl –u [username]:[password] –L https://nexus.unic.com/nexus/service/local/artifact/maven/redirect?r=unic-ecs-releases&g=LLB.Novus&a=Test.delivery_delivery-public&e=zip&v=LATEST
+
+where r represents the repository name, g is a group, a is an artifact, e extension and v=LATEST instructs nexus to grab for the latest version. Remember to replace the [username] and [password] with valid credentials.
+
 
 ## Load balancer integration
 Before using one of the `*-LB*` cmdlet, you need to connect to the load balancer. This can be achieved by running the following command:
