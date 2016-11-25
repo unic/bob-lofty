@@ -1,10 +1,9 @@
 # Changelog
 
-## 2.5
+## 3.0
 * Enhanced lofty with the possibility to upload files to Nexus thanks to the `Upload-OfflineDeploymentPackage` method
-
-## 2.4
 * Unified the naming. The `TargetUrl` is `Url` and the `UnmanagedFilesPath` is `BlueprintFolderPath` now
+* Bugfix: In offline deployment `install.bat` can now be double-clicked and doesn't need to be run with CMD.exe anymore.
 
 ## 2.3
 * Fix filename generation in case of multiple roles (replace `;` with `_`)
