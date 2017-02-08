@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1
+* fix items path for offline deployments
+* Update to Scoop 2.5 to reduce the package size
+
 ## 3.0
 * Enhanced lofty with the possibility to upload files to Nexus thanks to the `Upload-OfflineDeploymentPackage` method
 * Unified the naming. The `TargetUrl` is `Url` and the `UnmanagedFilesPath` is `BlueprintFolderPath` now
