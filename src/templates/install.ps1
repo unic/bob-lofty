@@ -44,7 +44,7 @@ if (-not $backupDir) {
     Write-Error "The backup dir is not set!"
 }
 
-if ($isDelivery)
+if (-not $isDelivery)
 {
     if(-not $itemsDirectory) {
         Write-Error "itemsDirectory in config is mandatory"
@@ -89,7 +89,7 @@ if($blueprintFolderPath) {
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-if ($isDelivery)
+if (-not $isDelivery)
 {
     $configFolder = "$scriptPath\configs"
     Install-AppItems $url "$itemsDirectory\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip" 
