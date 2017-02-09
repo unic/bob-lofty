@@ -71,7 +71,8 @@ function New-OfflineDeploymentPackage
         [string] $ConfigsPath,
         [string] $BlueprintFolderPath,
         [string] $BackupDir = "C:\Backup",
-        [string] $IsDelivery = "False"
+        [string] $IsDelivery = "False",
+        [string] $TargetItemsDirectory
     )
     Process
     {
@@ -124,6 +125,7 @@ function New-OfflineDeploymentPackage
             "BlueprintFolderPath" = $BlueprintFolderPath;
             "BackupDir" = $BackupDir;
             "IsDelivery" = $IsDelivery;
+            "ItemsDirectory" = $TargetItemsDirectory;
         }
 
         foreach($key in $config.Keys) {

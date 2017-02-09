@@ -33,7 +33,8 @@ $websiteLocation = $config.WebsiteLocation
 $url = $config.Url
 $blueprintFolderPath = $config.BlueprintFolderPath
 $backupDir = $config.BackupDir
-$isDelivery = $config.IsDelivery
+$isDelivery = $config.IsDelivery.ToLower() -eq "true"
+$itemsDirectory = $config.ItemsDirectory
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
@@ -41,6 +42,13 @@ if(-not $websiteLocation) {
 
 if (-not $backupDir) {
     Write-Error "The backup dir is not set!"
+}
+
+if (-not $isDelivery)
+{
+    if(-not $itemsDirectory) {
+        Write-Error "itemsDirectory in config is mandatory"
+    }
 }
 
 if ((Get-WebAppPoolState($appPoolName)).Value -ne "Stopped"){
@@ -81,11 +89,11 @@ if($blueprintFolderPath) {
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
 
-if (-not ($isDelivery.ToLower() -eq "true"))
+if (-not $isDelivery)
 {
     $configFolder = "$scriptPath\configs"
-    Install-AppItems $url "$scriptPath\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip" 
-    Install-DefaultItems $url "$scriptPath\defaultItems" "$scriptPath\tempDefaultItems" -DefaultItemsZipPath "$scriptPath\appDefault.zip"
+    Install-AppItems $url "$itemsDirectory\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip" 
+    Install-DefaultItems $url "$itemsDirectory\defaultItems" "$scriptPath\tempDefaultItems" -DefaultItemsZipPath "$scriptPath\appDefault.zip"
 }
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
