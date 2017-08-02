@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2
+* Enhanced Install-AppItems by providing a possibility to skip the creation of the serialization config file.
+* Export Set-ScSerializationReference as module cmdlet.
+
 ## 3.1
 * fix items path for offline deployments
 * Update to Scoop 2.5 to reduce the package size
