@@ -21,6 +21,12 @@ The path to the folder where the Bob.config is located.
 .PARAMETER WebRoot
 The path to the web-root of the Sitecore website.
 
+.PARAMETER AppItemsZipPath
+The path to the zip file containing the serialized items.
+
+.PARAMETER GenerateSerializationConfig
+Switch to either generate the serialization-configfile as part of this command or not. Defaults to true.
+
 .EXAMPLE
 Install-AppItems -Url http://local.sitecore.com -ItemReferencesPath D:\items\appItems -TempItemsPath D:\items\temp -ConfigPath D:\packages\Sitecore.Config -WebRoot D:\Webs\sitecore
 
@@ -36,7 +42,8 @@ function Install-AppItems {
         [string] $TempItemspath,
         [string] $ConfigPath,
         [string] $WebRoot,
-        [string] $AppItemsZipPath = ".\app.zip"
+        [string] $AppItemsZipPath = ".\app.zip",
+        [bool] $GenerateSerializationConfig = $true
     )
     Process
     {
@@ -56,8 +63,10 @@ function Install-AppItems {
         Write-Verbose "Move $tempPath\app to $ItemReferencesPath"
         mv "$tempPath\app" $ItemReferencesPath
                 
-        Set-ScSerializationReference $WebRoot $ConfigPath -SerializationPath $ItemReferencesPath -SerializationTemplateKey "DeploymentSerializationReferenceTemplate"
-        
+        if ($GenerateSerializationConfig) {
+            Set-ScSerializationReference $WebRoot $ConfigPath -SerializationPath $ItemReferencesPath -SerializationTemplateKey "DeploymentSerializationReferenceTemplate"
+        }
+
         $config = Get-ScProjectConfig $ConfigPath
         $sharedSecret = $config.UnicornSharedSecret
         if(-not $sharedSecret) {
