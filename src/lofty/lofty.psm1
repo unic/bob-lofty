@@ -38,6 +38,7 @@ Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\Bob
 Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Scoop" -RelativePath "tools\Scoop")
 Export-ModuleMember -Function Install-ScSerializationPackage
+Export-ModuleMember -Function Set-ScSerializationReference
 
 
 $WarningPreference = "SilentlyContinue"
