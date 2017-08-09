@@ -33,8 +33,11 @@ $websiteLocation = $config.WebsiteLocation
 $url = $config.Url
 $blueprintFolderPath = $config.BlueprintFolderPath
 $backupDir = $config.BackupDir
-$isDelivery = $config.IsDelivery.ToLower() -eq "true"
 $itemsDirectory = $config.ItemsDirectory
+$configFolder = "$scriptPath\configs"
+$role = $config.Role
+$environment = $config.Environment
+$isDelivery = $config.IsDelivery.ToLower() -eq "true"
 
 if(-not $websiteLocation) {
     Write-Error "Website location is not set!"
@@ -75,15 +78,29 @@ else {
 
 
 Write-Output "Copy content of $scriptPath\website to  $websiteLocation"
-cp  "$scriptPath\website\*" "$websiteLocation\" -Recurse
+cp "$scriptPath\website\*" "$websiteLocation\" -Recurse
 
 
-Write-Output "Restore unmanaged files from $blueprintFolderPath to $websiteLocation"
+Remove-EnvironmentFiles -WebRoot $websiteLocation `
+    -Environment $Environment -Role $Role `
+    -ConfigPath $configFolder
 
 if($blueprintFolderPath) {
-    
+    Write-Output "Restore unmanaged files from $blueprintFolderPath to $websiteLocation"
     cp  "$blueprintFolderPath\*" "$websiteLocation\" -Recurse -Force
-    
+}
+
+$unmanagedXdtFile = "$websiteLocation\Web.config.xdt"
+
+Install-LoftyWebConfig `
+    -ConfigPath $configFolder `
+    -WebConfigPath "$websiteLocation\Web.config" `
+    -Environment $Environment `
+    -Role $Role `
+    -UnmanagedXdtFile $unmanagedXdtFile
+
+if(Test-Path $unmanagedXdtFile) {
+    rm $unmanagedXdtFile
 }
 
 Write-Output "Starting IIS app pool $appPoolName"
@@ -91,7 +108,6 @@ Start-WebAppPool $appPoolName
 
 if (-not $isDelivery)
 {
-    $configFolder = "$scriptPath\configs"
     Install-AppItems $url "$itemsDirectory\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip" 
     Install-DefaultItems $url "$itemsDirectory\defaultItems" "$scriptPath\tempDefaultItems" -DefaultItemsZipPath "$scriptPath\appDefault.zip"
 }
