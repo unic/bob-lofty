@@ -80,28 +80,12 @@ else {
 Write-Output "Copy content of $scriptPath\website to  $websiteLocation"
 cp "$scriptPath\website\*" "$websiteLocation\" -Recurse
 
+Install-LoftyEnvironment -WebRoot $websiteLocation `
+    -Environment $environment `
+    -Role $role `
+    -BlueprintFolderPath $blueprintFolderPath `
+    -ConfigFolder $configFolder
 
-Remove-EnvironmentFiles -WebRoot $websiteLocation `
-    -Environment $Environment -Role $Role `
-    -ConfigPath $configFolder
-
-if($blueprintFolderPath) {
-    Write-Output "Restore unmanaged files from $blueprintFolderPath to $websiteLocation"
-    cp  "$blueprintFolderPath\*" "$websiteLocation\" -Recurse -Force
-}
-
-$unmanagedXdtFile = "$websiteLocation\Web.config.xdt"
-
-Install-LoftyWebConfig `
-    -ConfigPath $configFolder `
-    -WebConfigPath "$websiteLocation\Web.config" `
-    -Environment $Environment `
-    -Role $Role `
-    -UnmanagedXdtFile $unmanagedXdtFile
-
-if(Test-Path $unmanagedXdtFile) {
-    rm $unmanagedXdtFile
-}
 
 Write-Output "Starting IIS app pool $appPoolName"
 Start-WebAppPool $appPoolName
