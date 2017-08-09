@@ -72,6 +72,7 @@ function New-OfflineDeploymentPackage
         [string] $BlueprintFolderPath,
         [string] $BackupDir = "C:\Backup",
         [string] $TargetItemsDirectory,
+        [string] $IsDelivery,
         [string] $Environment = "",
         [string] $Role = ""
     )
