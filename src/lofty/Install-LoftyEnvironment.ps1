@@ -41,7 +41,8 @@ function Install-LoftyEnvironment {
         [Parameter(Mandatory=$true)]
         [string] $BlueprintFolderPath,
         [Parameter(Mandatory=$true)]
-        [string] $ConfigFolder
+        [string] $ConfigFolder,
+        [string] $UnmanagedXdtFile = "$WebRoot\Web.config.xdt"
     )
     Process
     {
@@ -53,8 +54,6 @@ function Install-LoftyEnvironment {
             Write-Output "Restore unmanaged files from $blueprintFolderPath to $WebRoot"
             cp  "$blueprintFolderPath\*" "$WebRoot\" -Recurse -Force
         }
-
-        $unmanagedXdtFile = "$WebRoot\Web.config.xdt"
 
         Install-LoftyWebConfig `
             -ConfigPath $configFolder `
