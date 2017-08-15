@@ -6,6 +6,10 @@
 * Added the possibility to put a file `Web.config.xdt` to the root of the blueprint folder. This file will then be applied as transformation to the Web.config ([SCMBOB-704](https://jira.unic.com/browse/SCMBOB-704))
 * [Migration Guide](MigrationGuide40.md)
 
+## 3.2
+* Enhanced Install-AppItems by providing a possibility to skip the creation of the serialization config file.
+* Export Set-ScSerializationReference as module cmdlet.
+
 ## 3.1
 * fix items path for offline deployments
 * Update to Scoop 2.5 to reduce the package size
