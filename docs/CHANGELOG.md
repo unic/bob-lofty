@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0
+* Offline Deployments: Moved Web.config transformation and App_Config/Include from Splasher to install.ps1 ([SCMBOB-703](https://jira.unic.com/browse/SCMBOB-703))
+* Introduced new command `Install-LoftyEnvironment` which wraps the code for App_Config, Web.config and unmanaged files management
+* Added the possibility to put a file `Web.config.xdt` to the root of the blueprint folder. This file will then be applied as transformation to the Web.config ([SCMBOB-704](https://jira.unic.com/browse/SCMBOB-704))
+* [Migration Guide](MigrationGuide40.md)
+
 ## 3.2
 * Enhanced Install-AppItems by providing a possibility to skip the creation of the serialization config file.
 * Export Set-ScSerializationReference as module cmdlet.

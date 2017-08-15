@@ -33,12 +33,17 @@ function Install-LoftyWebConfig
         [Parameter(Mandatory=$true)]
         [string] $Environment,
         [Parameter(Mandatory=$true)]
-        [string] $role
+        [string] $Role,
+        [string] $UnmanagedXdtFile = ""
     )
     Process
     {
         $folders = ls $ConfigPath | where {$_.PSIsContainer } | % {$_.FullName}
         
-        Install-WebConfigByFolders $folders $WebConfigPath $Environment $role.Split(";")
+        Install-WebConfigByFolders -Folders $folders `
+            -ConfigPath $WebConfigPath `
+            -Environment $Environment `
+            -Role $role.Split(";") `
+            -AdditionalXdtFiles @($UnmanagedXdtFile)
     }
 }
