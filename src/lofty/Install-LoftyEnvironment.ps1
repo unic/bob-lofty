@@ -4,9 +4,9 @@ Installs a Sitecore environment by applying role and environment specific config
 
 .DESCRIPTION
 Installs a Sitecore environment by applying role and environment specific configuration.
-This cmdlet expects a already prepared web-root (Sitecore and Customer files).
-In then applies environment, role and server specific configuration by performing this tasks:
-- Remove all files in App_Config/Include which doesn't match the current context.
+This cmdlet expects an already prepared web-root (Sitecore and Customer files).
+It then applies environment, role and server specific configuration by performing this tasks:
+- Remove all files in App_Config/Include which don't match the current context.
 - Copy all files from the blueprint folder to the web-root
 - Apply web.config transformations
 
