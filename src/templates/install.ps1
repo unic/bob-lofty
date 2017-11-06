@@ -92,8 +92,19 @@ Start-WebAppPool $appPoolName
 
 if (-not $isDelivery)
 {
-    Install-AppItems $url "$itemsDirectory\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip" 
-    Install-DefaultItems $url "$itemsDirectory\defaultItems" "$scriptPath\tempDefaultItems" -DefaultItemsZipPath "$scriptPath\appDefault.zip"
+    if(Test-Path "$scriptPath\app.zip") { 
+        Install-AppItems $url "$itemsDirectory\items" "$scriptPath\tempAppItems" $configFolder $websiteLocation -AppItemsZipPath "$scriptPath\app.zip"
+    }
+    else {
+        Write-Warning "Skipping the app.zip installation because '$scriptPath\app.zip' does not already exist."
+    }
+
+    if(Test-Path "$scriptPath\appDefault.zip") { 
+        Install-DefaultItems $url "$itemsDirectory\defaultItems" "$scriptPath\tempDefaultItems" -DefaultItemsZipPath "$scriptPath\appDefault.zip"
+    }
+    else {
+        Write-Warning "Skipping the app.zip installation because '$scriptPath\appDefault.zip' does not already exist."
+    }
 }
 
 (Get-Host).PrivateData.VerboseForegroundColor  = $originalVeboseColor
