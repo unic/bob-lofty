@@ -7,7 +7,6 @@
     <owners>Unic AG</owners>
     <iconUrl>https://github.com/unic/unic/raw/master/unic_nuget.png</iconUrl>
     <projectUrl>https://github.com/unic/bob-lofty</projectUrl>
-    <authors>Unic AG</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Bob's deployment tools</description>
   </metadata>
