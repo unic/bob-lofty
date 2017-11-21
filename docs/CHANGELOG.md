@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0
+
+* Initial release on GH
+* Support for Gitbook 3
+
 ## 4.1
 
 * Add support for Unicorn based "appDefault" setups and improve error handling in case of missing item packages.

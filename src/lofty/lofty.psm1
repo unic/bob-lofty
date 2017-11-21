@@ -34,7 +34,7 @@ function ResolveBinPath() {
 }
 
 Import-Module (ResolvePath "UnicornPS" "Unicorn.psm1")
-Import-Module (ResolvePath -PackageId "Unic.Bob.Config" -RelativePath "tools\BobConfig")
+Import-Module (ResolvePath -PackageId "Unic.Bob.Wendy" -RelativePath "tools\Wendy")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Rubble" -RelativePath "tools\Rubble")
 Import-Module (ResolvePath -PackageId "Unic.Bob.Scoop" -RelativePath "tools\Scoop")
 Export-ModuleMember -Function Install-ScSerializationPackage

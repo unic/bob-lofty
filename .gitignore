@@ -1,7 +1,14 @@
-nuget.exe
-paket.exe
+# Paket
+packages/
+paket-files/
+.paket/
+!.paket/paket.bootstrapper.exe
 
-packages
-paket-files
 
-*.nupkg
+# Gitbook
+docs/node_modules/
+docs-generated/
+temp/
+
+# GIT
+.git-credentials
