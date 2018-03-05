@@ -118,6 +118,12 @@ function New-OfflineDeploymentPackage
         mkdir website
         cp "$WebsitePath\*" .\website -Recurse
 
+        foreach ($website in $AdditionalWebsites) {
+            $folderName = "website-$($website.TargetAppPoolName)"
+            mkdir $folderName
+            cp "$($website.WebsitePath)\*" .\$folderName -Recurse
+        }
+
         if($ItemsPath -and (Test-Path $ItemsPath)) {
             mkdir items
             cp "$ItemsPath\*" . -Recurse
