@@ -74,10 +74,22 @@ function New-OfflineDeploymentPackage
         [string] $TargetItemsDirectory,
         [string] $IsDelivery,
         [string] $Environment = "",
-        [string] $Role = ""
+        [string] $Role = "",
+        $AdditionalWebsites
     )
     Process
     {
+        function AddXmlConfigNode ($doc, $parent, $config, $nodeName) {
+            $node = $doc.CreateElement($nodeName)
+            $parent.AppendChild($node) | Out-Null
+            foreach($key in $config.Keys) {
+                $element = $doc.CreateElement($key)
+                $element.InnerText = $config[$key]
+                $node.AppendChild($element)
+            }
+            $node
+        }
+
         $tempWorkingDirectory = ""
         while ($tempWorkingDirectory -eq "")
         {
@@ -117,8 +129,6 @@ function New-OfflineDeploymentPackage
         }
         
         $doc = New-Object System.XML.XMLDocument
-        $docRoot = $doc.CreateElement("configuration")
-        $doc.AppendChild($docRoot) | Out-Null
 
         $config = @{
             "ApplicationPoolName" = $TargetAppPoolName;
@@ -132,10 +142,19 @@ function New-OfflineDeploymentPackage
             "Environment" = $Environment;
         }
 
-        foreach($key in $config.Keys) {
-            $element = $doc.CreateElement($key)
-            $element.InnerText = $config[$key]
-            $docRoot.AppendChild($element)
+        $docRoot = AddXmlConfigNode $doc $doc $config "configuration"
+
+        if ($AdditionalWebsites) {
+            $websitesElement = $doc.CreateElement("AdditionalWebsites")
+            $docRoot.AppendChild($websitesElement) | Out-Null
+            foreach ($website in $AdditionalWebsites) {
+                $additionalConfig = @{
+                    "ApplicationPoolName" = $website.TargetAppPoolName;
+                    "WebsiteLocation" = $website.TargetWebsitePath;
+                    "BlueprintFolderPath" = $website.BlueprintFolderPath;
+                }
+                AddXmlConfigNode $doc $websitesElement $additionalConfig "Website"
+            }
         }
 
         $configPath = "$($pwd.Path)\config.xml"
