@@ -45,9 +45,24 @@ The path to the folder where the files will be backed up before deployment.
 .PARAMETER IsDelivery
 Indicates whether the package will be installed on a delivery environment. It is used to decide whether the items should be installed.
 
+.PARAMETER AdditionalWebsites
+Additional websites as array of objects providing: WebsitePath, TargetWebsitePath, TargetAppPoolName and optionally BlueprintFolderPath
+
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
-    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -Url http://author.customer.com  -ItemsPath "D:\items"
+    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -Url http://author.customer.com  -ItemsPath "D:\items" `
+    -AdditionalWebsites @(
+    @{
+        WebsitePath         = "D:\offline-source\foo";
+        TargetWebsitePath   = "d:\webs\foo";
+        TargetAppPoolName   = "foo";
+    },
+    @{
+        WebsitePath         = "D:\offline-source\bar";
+        TargetWebsitePath   = "d:\webs\bar";
+        TargetAppPoolName   = "bar";
+        BlueprintFolderPath = "d:\data\bar-template"
+    })
 
 #>
 function New-OfflineDeploymentPackage
