@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1
+
+* Added possibility to install additional non-Sitecore websites with offline deployments.
+
 ## 5.0
 
 * Initial release on GH

@@ -45,9 +45,24 @@ The path to the folder where the files will be backed up before deployment.
 .PARAMETER IsDelivery
 Indicates whether the package will be installed on a delivery environment. It is used to decide whether the items should be installed.
 
+.PARAMETER AdditionalWebsites
+Additional websites as array of objects providing: WebsitePath, TargetWebsitePath, TargetAppPoolName and optionally BlueprintFolderPath
+
 .EXAMPLE
 New-OfflineDeploymentPackage -WebsitePath D:\Website -TargetWebsitePath D:\webs\sitecore-website -TargetAppPoolName sitecore-website `
-    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -Url http://author.customer.com  -ItemsPath "D:\items"
+    -PackageName MyPackage -WorkingDirectory D:\Temp -TargetDirectory D:\Output -Url http://author.customer.com  -ItemsPath "D:\items" `
+    -AdditionalWebsites @(
+    @{
+        WebsitePath         = "D:\offline-source\foo";
+        TargetWebsitePath   = "d:\webs\foo";
+        TargetAppPoolName   = "foo";
+    },
+    @{
+        WebsitePath         = "D:\offline-source\bar";
+        TargetWebsitePath   = "d:\webs\bar";
+        TargetAppPoolName   = "bar";
+        BlueprintFolderPath = "d:\data\bar-template"
+    })
 
 #>
 function New-OfflineDeploymentPackage
@@ -74,10 +89,22 @@ function New-OfflineDeploymentPackage
         [string] $TargetItemsDirectory,
         [string] $IsDelivery,
         [string] $Environment = "",
-        [string] $Role = ""
+        [string] $Role = "",
+        $AdditionalWebsites
     )
     Process
     {
+        function AddXmlConfigNode ($doc, $parent, $config, $nodeName) {
+            $node = $doc.CreateElement($nodeName)
+            $parent.AppendChild($node) | Out-Null
+            foreach($key in $config.Keys) {
+                $element = $doc.CreateElement($key)
+                $element.InnerText = $config[$key]
+                $node.AppendChild($element)
+            }
+            $node
+        }
+
         $tempWorkingDirectory = ""
         while ($tempWorkingDirectory -eq "")
         {
@@ -106,6 +133,12 @@ function New-OfflineDeploymentPackage
         mkdir website
         cp "$WebsitePath\*" .\website -Recurse
 
+        foreach ($website in $AdditionalWebsites) {
+            $folderName = "website-$($website.TargetAppPoolName)"
+            mkdir $folderName
+            cp "$($website.WebsitePath)\*" .\$folderName -Recurse
+        }
+
         if($ItemsPath -and (Test-Path $ItemsPath)) {
             mkdir items
             cp "$ItemsPath\*" . -Recurse
@@ -117,8 +150,6 @@ function New-OfflineDeploymentPackage
         }
         
         $doc = New-Object System.XML.XMLDocument
-        $docRoot = $doc.CreateElement("configuration")
-        $doc.AppendChild($docRoot) | Out-Null
 
         $config = @{
             "ApplicationPoolName" = $TargetAppPoolName;
@@ -132,10 +163,19 @@ function New-OfflineDeploymentPackage
             "Environment" = $Environment;
         }
 
-        foreach($key in $config.Keys) {
-            $element = $doc.CreateElement($key)
-            $element.InnerText = $config[$key]
-            $docRoot.AppendChild($element)
+        $docRoot = AddXmlConfigNode $doc $doc $config "configuration"
+
+        if ($AdditionalWebsites) {
+            $websitesElement = $doc.CreateElement("AdditionalWebsites")
+            $docRoot.AppendChild($websitesElement) | Out-Null
+            foreach ($website in $AdditionalWebsites) {
+                $additionalConfig = @{
+                    "ApplicationPoolName" = $website.TargetAppPoolName;
+                    "WebsiteLocation" = $website.TargetWebsitePath;
+                    "BlueprintFolderPath" = $website.BlueprintFolderPath;
+                }
+                AddXmlConfigNode $doc $websitesElement $additionalConfig "Website"
+            }
         }
 
         $configPath = "$($pwd.Path)\config.xml"
