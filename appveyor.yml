@@ -18,7 +18,7 @@ install:
   - ps: gitversion /l console /output buildserver
   - ps: |
       .\restore.ps1
-      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)}
+      if ($LastExitCode -ne 0) {$host.SetShouldExit($LastExitCode)}
 
   # Setup GIT
   - git config --global user.email %GithubEmail%
@@ -36,7 +36,7 @@ build_script:
   - ps: |
       $ErrorActionPreference = 'Stop';
       .\generateDocs.ps1
-      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)}
+      if ($LastExitCode -ne 0) {$host.SetShouldExit($LastExitCode)}
   - 7z a -r %Artefact_Output_Dir%\docs.zip %APPVEYOR_BUILD_FOLDER%\docs-generated\_book
 
 after_build:
@@ -46,7 +46,7 @@ after_build:
 test_script:
   - ps: |
       .\runTests.ps1
-      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)}
+      if ($LastExitCode -ne 0) {$host.SetShouldExit($LastExitCode)}
 
 deploy_script:
   - ps: |
@@ -58,4 +58,4 @@ deploy_script:
         Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GithubAccessTokenTeamUnic):x-oauth-basic@github.com`n";
         .\pushDocs.ps1 $env:APPVEYOR_BUILD_FOLDER docs-generated\_book https://github.com/unic/$($env:RepoName).git
       }
-      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)}
+      if ($LastExitCode -ne 0) {$host.SetShouldExit($LastExitCode)}
