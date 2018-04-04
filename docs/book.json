@@ -1,7 +1,7 @@
 {
     "gitbook": "3.2.3",
     "plugins": [
-        "theme-unic@git+https://github.com/unic/gitbook-plugin-theme-unic.git"
+        "theme-unic@git+https://github.com/unic/gitbook-plugin-theme-unicxx.git"
     ],
     "links": {
         "sharing": {
