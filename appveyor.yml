@@ -44,7 +44,9 @@ after_build:
   - cmd: appveyor PushArtifact %Artefact_Output_Dir%\docs.zip
 
 test_script:
-  - ps: .\runTests.ps1
+  - ps: |
+      .\runTests.ps1
+      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)}
 
 deploy_script:
   - ps: |
