@@ -68,7 +68,15 @@ function Install-AppItems {
         }
 
         $config = Get-ScProjectConfig $ConfigPath
-        $sharedSecret = $config.UnicornSharedSecret
+
+        if($config.UnicornSharedSecretFile -and (Test-Path $config.UnicornSharedSecretFile)) {
+            $sharedSecret = Get-Content $config.UnicornSharedSecretFile
+        }
+
+        if(-not $sharedSecret) {
+            $sharedSecret = $config.UnicornSharedSecret
+        }
+
         if(-not $sharedSecret) {
             Write-Error "You must add the UnicornSharedSecret config key to the Bob.config"
         }

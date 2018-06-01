@@ -45,3 +45,9 @@ where `r` represents the repository name, `g` is a group, `a` is an artifact, `e
 Before using one of the `*-LB*` cmdlet, you need to connect to the load balancer. This can be achieved by running the following command:
 
     Initialize-F5.iControl -HostName $BigIPHostname -Username $Username -Password $Password
+
+## Unicorn Authentication
+So that Lofty can execute an Unicorn synchronisation, it must authenticate it against Unicorn. 
+To do so there is a UnicornSharedSecret. The UnicornSharedSecret can either be configured directly in Bob.config with the `<UnicornSharedSecret>` key
+or alternatively the `UnicornSharedSecretFile` key can be used. This file needs to contain a path to a plain-text fail containing the key.
+If both are set and the file referenced in `UnicornSharedSecretFile` exists on the system `UnicornSharedSecretFile` will preceed over `UnicornSharedSecret`.
