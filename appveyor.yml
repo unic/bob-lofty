@@ -35,8 +35,8 @@ build_script:
   - cmd: nuget pack %Nuspec_File% -version "%GitVersion_NuGetVersionV2%" -OutputDirectory %Artefact_Output_Dir% -NoPackageAnalysis
   - ps: |
       $ErrorActionPreference = 'Stop';
-      .\generateDocs.ps1
-      if ($LastExitCode -ne 0) {$host.SetShouldExit($LastExitCode)}
+      #.\generateDocs.ps1
+      #if ($LastExitCode -ne 0) {$host.SetShouldExit($LastExitCode)}
   - 7z a -r %Artefact_Output_Dir%\docs.zip %APPVEYOR_BUILD_FOLDER%\docs-generated\_book
 
 after_build:
