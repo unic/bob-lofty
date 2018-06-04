@@ -49,5 +49,5 @@ Before using one of the `*-LB*` cmdlet, you need to connect to the load balancer
 ## Unicorn Authentication
 So that Lofty can execute an Unicorn synchronisation, it must authenticate it against Unicorn. 
 To do so there is a UnicornSharedSecret. The UnicornSharedSecret can either be configured directly in Bob.config with the `<UnicornSharedSecret>` key
-or alternatively the `UnicornSharedSecretFile` key can be used. This file needs to contain a path to a plain-text fail containing the key.
+or alternatively the `UnicornSharedSecretFile` key can be used. This key needs to contain a path to a plain-text file containing the key.
 If both are set and the file referenced in `UnicornSharedSecretFile` exists on the system `UnicornSharedSecretFile` will preceed over `UnicornSharedSecret`.

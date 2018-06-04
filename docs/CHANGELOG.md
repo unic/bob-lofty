@@ -1,7 +1,7 @@
 # Changelog
 
 ## 5.2
-* Add possibilty to store the Unicorn shared secret in a file on the target system, instead of Bob.config
+* Add possibility to store the Unicorn shared secret in a file on the target system, instead of Bob.config
 
 ## 5.1
 

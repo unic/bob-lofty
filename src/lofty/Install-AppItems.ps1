@@ -78,7 +78,7 @@ function Install-AppItems {
         }
 
         if(-not $sharedSecret) {
-            Write-Error "You must add the UnicornSharedSecret config key to the Bob.config"
+            Write-Error "You must add the UnicornSharedSecretFile or UnicornSharedSecret config key to the Bob.config"
         }
         
         # Ignore SSL check
